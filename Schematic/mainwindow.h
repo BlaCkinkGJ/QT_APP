@@ -26,6 +26,8 @@
 #include <queue>
 #include <cmath>
 
+#include "tool.h"
+
 #define INF 987654321
 namespace Ui {
 class MainWindow;
@@ -57,6 +59,14 @@ private slots:
     void on_ResetButton_clicked();
 
 
+    void on_exit_clicked();
+
+    void on_save_clicked();
+
+    void on_open_clicked();
+
+    void on_extraction_clicked();
+
 private:
     bool startDrawing = false;
     int wallDrawing = 0;
@@ -64,6 +74,7 @@ private:
     int houseWidth, houseHeight;
     QMessageBox qmb;
     Ui::MainWindow *ui;
+    tool toolBar;
 /*
     SchScene *scene;
 */

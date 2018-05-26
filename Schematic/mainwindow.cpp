@@ -130,10 +130,10 @@ void MainWindow::on_EnterButton_clicked()
     outlinePen.setWidth(1);
 
     experiorWall.clear();
-    experiorWall.push_back(scene->addLine(0, 0, houseWidth, 0, outlinePen));
-    experiorWall.push_back(scene->addLine(houseWidth, 0, houseWidth, houseHeight, outlinePen));
-    experiorWall.push_back(scene->addLine(houseWidth, houseHeight, 0, houseHeight, outlinePen));
-    experiorWall.push_back(scene->addLine(0, houseHeight, 0, 0, outlinePen));
+    experiorWall.push_back(scene->addLine(100, 100, houseWidth, 100, outlinePen));
+    experiorWall.push_back(scene->addLine(houseWidth, 100, houseWidth, houseHeight, outlinePen));
+    experiorWall.push_back(scene->addLine(houseWidth, houseHeight, 100, houseHeight, outlinePen));
+    experiorWall.push_back(scene->addLine(100, houseHeight, 100, 100, outlinePen));
 }
 
 void MainWindow::on_ResetButton_clicked()
@@ -510,4 +510,24 @@ void MainWindow::bfs()
 
     QPixmap pixmap = QPixmap::fromImage(image);
     scene->addPixmap(pixmap);
+}
+
+void MainWindow::on_exit_clicked()
+{ // close the application
+    QApplication::quit();
+}
+
+void MainWindow::on_save_clicked()
+{
+    // toolBar.saveFile(); // data required
+}
+
+void MainWindow::on_open_clicked()
+{
+    // toolBar.openFile(); // how to put is required
+}
+
+void MainWindow::on_extraction_clicked()
+{
+    toolBar.imageExtraction(this->ui->graphicsView);
 }

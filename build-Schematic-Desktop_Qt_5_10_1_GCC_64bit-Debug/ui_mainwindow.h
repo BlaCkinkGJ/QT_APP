@@ -40,6 +40,11 @@ public:
     QGraphicsView *graphicsView;
     QPushButton *ResetButton;
     QListView *FurnitureList;
+    QLabel *label_4;
+    QPushButton *save;
+    QPushButton *open;
+    QPushButton *extraction;
+    QPushButton *exit_2;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -111,10 +116,29 @@ public:
         ResetButton->setMaximumSize(QSize(1920, 1080));
         FurnitureList = new QListView(centralWidget);
         FurnitureList->setObjectName(QStringLiteral("FurnitureList"));
-        FurnitureList->setGeometry(QRect(20, 190, 181, 171));
+        FurnitureList->setGeometry(QRect(30, 190, 181, 171));
         sizePolicy.setHeightForWidth(FurnitureList->sizePolicy().hasHeightForWidth());
         FurnitureList->setSizePolicy(sizePolicy);
         FurnitureList->setMaximumSize(QSize(1920, 1080));
+        label_4 = new QLabel(centralWidget);
+        label_4->setObjectName(QStringLiteral("label_4"));
+        label_4->setGeometry(QRect(50, 150, 121, 31));
+        sizePolicy.setHeightForWidth(label_4->sizePolicy().hasHeightForWidth());
+        label_4->setSizePolicy(sizePolicy);
+        label_4->setMaximumSize(QSize(1920, 1080));
+        label_4->setAlignment(Qt::AlignCenter);
+        save = new QPushButton(centralWidget);
+        save->setObjectName(QStringLiteral("save"));
+        save->setGeometry(QRect(70, 410, 100, 23));
+        open = new QPushButton(centralWidget);
+        open->setObjectName(QStringLiteral("open"));
+        open->setGeometry(QRect(70, 450, 100, 23));
+        extraction = new QPushButton(centralWidget);
+        extraction->setObjectName(QStringLiteral("extraction"));
+        extraction->setGeometry(QRect(70, 490, 100, 23));
+        exit_2 = new QPushButton(centralWidget);
+        exit_2->setObjectName(QStringLiteral("exit_2"));
+        exit_2->setGeometry(QRect(70, 530, 100, 23));
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
@@ -140,6 +164,11 @@ public:
         label_3->setText(QApplication::translate("MainWindow", "Height(M)", nullptr));
         EnterButton->setText(QApplication::translate("MainWindow", "Enter", nullptr));
         ResetButton->setText(QApplication::translate("MainWindow", "Reset", nullptr));
+        label_4->setText(QApplication::translate("MainWindow", "Furniture List", nullptr));
+        save->setText(QApplication::translate("MainWindow", "save", nullptr));
+        open->setText(QApplication::translate("MainWindow", "open", nullptr));
+        extraction->setText(QApplication::translate("MainWindow", "extraction", nullptr));
+        exit_2->setText(QApplication::translate("MainWindow", "exit", nullptr));
     } // retranslateUi
 
 };
