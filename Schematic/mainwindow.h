@@ -36,11 +36,6 @@ public:
 private slots:
     void on_EnterButton_clicked();
     void on_ResetButton_clicked();
-    void on_makeWall_clicked();
-
-    void on_DoorButton_clicked();
-
-    void on_WindowButton_clicked();
 
 private:
     bool startDrawing = false;

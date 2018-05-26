@@ -2,6 +2,8 @@
 #include "ui_mainwindow.h"
 
 bool dir; // Not useful
+int roomColor[2000][2000];
+int state = 0;
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
@@ -9,9 +11,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
     scene = new QGraphicsScene(0, 0, 1000, 1000);
     ui->graphicsView->setScene(scene);
-
-    // ui->graphicsView->setSceneRect(20, 10, 300, 200);
-    setMouseTracking(true);
 }
 
 MainWindow::~MainWindow()
@@ -21,7 +20,35 @@ MainWindow::~MainWindow()
 
 void MainWindow::keyPressEvent(QKeyEvent* event)
 {
-    //if(event->key() == )
+    if(!startDrawing) return;
+
+    if(event->key() == Qt::Key_1)
+    {
+        if(wallDrawing == 1)
+        {
+            wallDrawing = 0;
+            return;
+        }
+        wallDrawing = 1;
+    }
+    else if (event->key() == Qt::Key_2)
+    {
+        if(wallDrawing == 3)
+        {
+            wallDrawing = 0;
+            return;
+        }
+        wallDrawing = 3;
+    }
+    else if (event->key() == Qt::Key_3)
+    {
+        if(wallDrawing == 4)
+        {
+            wallDrawing = 0;
+            return;
+        }
+        wallDrawing = 4;
+    }
 }
 
 void MainWindow::on_EnterButton_clicked()
@@ -31,9 +58,6 @@ void MainWindow::on_EnterButton_clicked()
 
     QPoint origin = ui->graphicsView->mapFromGlobal(QCursor::pos());
     QPointF relativeOrigin = ui->graphicsView->mapToScene(origin);
-
-    int a = origin.x() - relativeOrigin.x();
-    int b = origin.y() - relativeOrigin.y();
 
     double width = ui->lineEdit->text().toDouble();
     double height = ui->lineEdit_2->text().toDouble();
@@ -52,6 +76,21 @@ void MainWindow::on_EnterButton_clicked()
 
 void MainWindow::on_ResetButton_clicked()
 {
+    for(int i=0; i<=2000; i++)
+        for(int j=0; j<=2000; j++)
+            roomColor[i][j] = 0;
+
+    QPixmap qPix = QPixmap::grabWidget(ui->graphicsView, 0, 0, 1001, 1001);
+    QImage image(qPix.toImage());
+
+    QRgb val = qRgb(255, 255 ,255);
+
+    for(int i = 0; i <= 1000; i++)
+        for(int j = 0; j <= 1000; j++)
+            image.setPixelColor(i, j,  val);
+
+    QPixmap pixmap = QPixmap::fromImage(image);
+    scene->addPixmap(pixmap);
 
     for(auto index : experiorWall)
     {
@@ -76,23 +115,13 @@ void MainWindow::on_ResetButton_clicked()
     startDrawing = false;
 }
 
-
-void MainWindow::on_makeWall_clicked()
-{
-   if(!startDrawing) return;
-
-    wallDrawing = 1;
-
-    qmb.setText("Click the wall, please.");
-    qmb.exec();
-}
-
 void MainWindow::mousePressEvent(QMouseEvent *mouse)
 {
     if(!startDrawing || !wallDrawing) return;
 
     QPoint origin = ui->graphicsView->mapFromGlobal(QCursor::pos());
     QPointF relativeOrigin = ui->graphicsView->mapToScene(origin);
+    QGraphicsRectItem *temp = new QGraphicsRectItem();
 
     int x = relativeOrigin.x();
     int y = relativeOrigin.y();
@@ -137,10 +166,13 @@ void MainWindow::mousePressEvent(QMouseEvent *mouse)
         wallx1 = x;
         wally1 = y;
 
+        QPen outlinePen(Qt::red);
+        QBrush brush(Qt::red);
+        temp = scene->addRect(wallx1 - 1, wally1 - 1, 3, 3, outlinePen, brush);
     }
     else if(wallDrawing == 2)
     {
-        wallDrawing = 0;
+        wallDrawing--;
 
         wallx2 = x;
         wally2 = y;
@@ -149,8 +181,14 @@ void MainWindow::mousePressEvent(QMouseEvent *mouse)
         else wallx2 = wallx1;
 
         QPen outlinePen(Qt::red);
-        outlinePen.setWidth(2);
+        outlinePen.setWidth(1);
         interiorWall.push_back(scene->addLine(wallx1, wally1, wallx2, wally2, outlinePen));
+
+        scene->removeItem(temp);
+
+        for(int i=wallx1; i<=wallx2; i++)
+            for(int j=wally1; j<=wally2; j++)
+                roomColor[i][j] = -1;
     }
     else if(wallDrawing == 3) // window
     {
@@ -233,8 +271,6 @@ void MainWindow::mousePressEvent(QMouseEvent *mouse)
                 windowList.push_back(scene->addLine(x, y, x, y + 20, outlinePen));
             else windowList.push_back(scene->addLine(x, y, x, y - 20, outlinePen));
         }
-
-        // wallDrawing = 0;
     }
     else if(wallDrawing == 4) // door
     {
@@ -317,13 +353,6 @@ void MainWindow::mousePressEvent(QMouseEvent *mouse)
                 windowList.push_back(scene->addLine(x, y, x, y + 20, outlinePen));
             else windowList.push_back(scene->addLine(x, y, x, y - 20, outlinePen));
         }
-
-//        QString imgPath = "C:/Qt/Qt5.10.1/image/door.jpg";
-//        QImage img(imgPath);
-//        QPixmap pix = QPixmap::fromImage(img);
-//        pix = pix.scaled(30, 30);
-
-//        scene->addPixmap(pix);
     }
 }
 
@@ -338,39 +367,14 @@ void MainWindow::mouseMoveEvent(QMouseEvent *mouseEvent)
     ui->lineEdit->setText(QString::number(x));
 }
 
-void MainWindow::on_DoorButton_clicked()
-{
-    if(wallDrawing == 4)
-    {
-        wallDrawing = 0;
-        return;
-    }
-    wallDrawing = 4;
-}
-
-void MainWindow::on_WindowButton_clicked()
-{
-    if(wallDrawing == 3)
-    {
-        wallDrawing = 0;
-        return;
-    }
-    wallDrawing = 3;
-
-
-
-    bfs();
-}
-
 void MainWindow::mouseDoubleClickEvent(QMouseEvent *event)
 {
+    if(!(wallDrawing == 1 || wallDrawing == 2)) return;
+    bfs();
     double length;
 
     QPoint origin = ui->graphicsView->mapFromGlobal(QCursor::pos());
     QPointF relativeOrigin = ui->graphicsView->mapToScene(origin);
-
-    int a = origin.x(); int b = origin.y();
-
 
     int x = relativeOrigin.x();
     int y = relativeOrigin.y();
@@ -396,12 +400,6 @@ void MainWindow::mouseDoubleClickEvent(QMouseEvent *event)
 
 void MainWindow::bfs()
 {
-    QPoint origin = ui->graphicsView->mapFromGlobal(QCursor::pos());
-    QPointF relativeOrigin = ui->graphicsView->mapToScene(origin);
-
-    int a = origin.x() - relativeOrigin.x();
-    int b = origin.y() - relativeOrigin.y();
-
     QPixmap qPix = QPixmap::grabWidget(ui->graphicsView);
     QImage image(qPix.toImage());
 
@@ -409,11 +407,12 @@ void MainWindow::bfs()
     int count = 0;
 
     int dx[4] = {1, -1, 0, 0}, dy[4] = {0, 0, 1, -1};
-    for(int i = 1; i <= houseWidth; i++)
+    for(int i = 0; i <= houseWidth; i++)
     {
-        for(int j = 1; j <= houseHeight; j++)
+        for(int j = 0; j <= houseHeight; j++)
         {
-            QColor color(image.pixelColor(i + a, j + b));
+            QColor color(image.pixelColor(i, j));
+            // if(roomColor[i][j] == 0)
             if(color.blue() == 255 && color.red() == 255 && color.green() == 255)
             {
                 std::queue<std::pair<int, int> > temp;
@@ -433,16 +432,19 @@ void MainWindow::bfs()
                     {
                         int x = tx + dx[k];
                         int y = ty + dy[k];
-                        if(x < 0 || y < 0 || x > houseWidth || y > houseWidth) continue;
-                        QColor color2(image.pixelColor(x + a, y + b));
+                        if(x < 0 || y < 0 || x > houseWidth || y > houseHeight) continue;
+                        QColor color2(image.pixelColor(x, y));
+                        // if(roomColor[x][y]) continue;
                         if(color2.blue() != 255 || color2.red() != 255 || color2.green() != 255) continue;
-                        image.setPixelColor(x + a, y + b,  val[count]);
+                        // roomColor[x][y] = count + 1;
+                        image.setPixelColor(x, y,  val[count]);
                         temp.push(std::make_pair(x, y));
                     }
                 }
             }
         }
     }
+
 
     QPixmap pixmap = QPixmap::fromImage(image);
     scene->addPixmap(pixmap);

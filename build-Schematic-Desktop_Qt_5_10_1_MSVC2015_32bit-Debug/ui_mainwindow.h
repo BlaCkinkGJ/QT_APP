@@ -38,9 +38,6 @@ public:
     QPushButton *EnterButton;
     QGraphicsView *graphicsView;
     QPushButton *ResetButton;
-    QPushButton *makeWall;
-    QPushButton *DoorButton;
-    QPushButton *WindowButton;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -49,7 +46,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(1843, 1124);
+        MainWindow->resize(1119, 842);
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         label = new QLabel(centralWidget);
@@ -76,19 +73,10 @@ public:
         ResetButton = new QPushButton(centralWidget);
         ResetButton->setObjectName(QStringLiteral("ResetButton"));
         ResetButton->setGeometry(QRect(340, 70, 71, 31));
-        makeWall = new QPushButton(centralWidget);
-        makeWall->setObjectName(QStringLiteral("makeWall"));
-        makeWall->setGeometry(QRect(430, 70, 121, 31));
-        DoorButton = new QPushButton(centralWidget);
-        DoorButton->setObjectName(QStringLiteral("DoorButton"));
-        DoorButton->setGeometry(QRect(570, 70, 71, 31));
-        WindowButton = new QPushButton(centralWidget);
-        WindowButton->setObjectName(QStringLiteral("WindowButton"));
-        WindowButton->setGeometry(QRect(660, 70, 71, 31));
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 1843, 17));
+        menuBar->setGeometry(QRect(0, 0, 1119, 17));
         MainWindow->setMenuBar(menuBar);
         mainToolBar = new QToolBar(MainWindow);
         mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
@@ -110,9 +98,6 @@ public:
         label_3->setText(QApplication::translate("MainWindow", "Height(M)", nullptr));
         EnterButton->setText(QApplication::translate("MainWindow", "Enter", nullptr));
         ResetButton->setText(QApplication::translate("MainWindow", "Reset", nullptr));
-        makeWall->setText(QApplication::translate("MainWindow", "makeWall", nullptr));
-        DoorButton->setText(QApplication::translate("MainWindow", "Door", nullptr));
-        WindowButton->setText(QApplication::translate("MainWindow", "Window", nullptr));
     } // retranslateUi
 
 };

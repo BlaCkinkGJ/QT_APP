@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1843</width>
-    <height>1124</height>
+    <width>1119</width>
+    <height>842</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -109,52 +109,13 @@
      <string>Reset</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="makeWall">
-    <property name="geometry">
-     <rect>
-      <x>430</x>
-      <y>70</y>
-      <width>121</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>makeWall</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="DoorButton">
-    <property name="geometry">
-     <rect>
-      <x>570</x>
-      <y>70</y>
-      <width>71</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Door</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="WindowButton">
-    <property name="geometry">
-     <rect>
-      <x>660</x>
-      <y>70</y>
-      <width>71</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Window</string>
-    </property>
-   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1843</width>
+     <width>1119</width>
      <height>17</height>
     </rect>
    </property>
