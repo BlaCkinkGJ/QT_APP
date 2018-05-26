@@ -6,117 +6,156 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>942</width>
-    <height>524</height>
+    <width>1843</width>
+    <height>1124</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QPushButton" name="saveButton">
+   <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>30</x>
-      <y>190</y>
-      <width>83</width>
-      <height>23</height>
+      <x>10</x>
+      <y>10</y>
+      <width>361</width>
+      <height>21</height>
      </rect>
     </property>
     <property name="text">
-     <string>SaveButton</string>
+     <string>Input width and heigth of your house.</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="LoadButton">
+   <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
-      <x>150</x>
-      <y>190</y>
-      <width>83</width>
-      <height>23</height>
+      <x>10</x>
+      <y>50</y>
+      <width>91</width>
+      <height>31</height>
      </rect>
     </property>
     <property name="text">
-     <string>LoadButton</string>
+     <string>Width(M)</string>
     </property>
    </widget>
-   <widget class="QLabel" name="currentValue">
+   <widget class="QLabel" name="label_3">
     <property name="geometry">
      <rect>
-      <x>80</x>
-      <y>110</y>
-      <width>68</width>
-      <height>15</height>
+      <x>10</x>
+      <y>100</y>
+      <width>91</width>
+      <height>31</height>
      </rect>
     </property>
     <property name="text">
-     <string>value</string>
+     <string>Height(M)</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="png_save">
+   <widget class="QLineEdit" name="lineEdit">
     <property name="geometry">
      <rect>
-      <x>30</x>
-      <y>250</y>
-      <width>83</width>
-      <height>23</height>
+      <x>110</x>
+      <y>50</y>
+      <width>111</width>
+      <height>31</height>
      </rect>
     </property>
-    <property name="text">
-     <string>png save</string>
-    </property>
    </widget>
-   <widget class="QGraphicsView" name="view">
+   <widget class="QLineEdit" name="lineEdit_2">
     <property name="geometry">
      <rect>
-      <x>280</x>
+      <x>110</x>
+      <y>100</y>
+      <width>111</width>
+      <height>31</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="EnterButton">
+    <property name="geometry">
+     <rect>
+      <x>250</x>
       <y>70</y>
-      <width>501</width>
-      <height>311</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="getImage">
-    <property name="geometry">
-     <rect>
-      <x>150</x>
-      <y>260</y>
-      <width>83</width>
-      <height>23</height>
+      <width>71</width>
+      <height>31</height>
      </rect>
     </property>
     <property name="text">
-     <string>getImage</string>
+     <string>Enter</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="move">
+   <widget class="QGraphicsView" name="graphicsView">
     <property name="geometry">
      <rect>
-      <x>90</x>
-      <y>320</y>
-      <width>83</width>
-      <height>23</height>
+      <x>240</x>
+      <y>130</y>
+      <width>861</width>
+      <height>661</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="ResetButton">
+    <property name="geometry">
+     <rect>
+      <x>340</x>
+      <y>70</y>
+      <width>71</width>
+      <height>31</height>
      </rect>
     </property>
     <property name="text">
-     <string>move</string>
+     <string>Reset</string>
     </property>
    </widget>
-   <zorder>view</zorder>
-   <zorder>saveButton</zorder>
-   <zorder>LoadButton</zorder>
-   <zorder>currentValue</zorder>
-   <zorder>png_save</zorder>
-   <zorder>getImage</zorder>
-   <zorder>move</zorder>
+   <widget class="QPushButton" name="makeWall">
+    <property name="geometry">
+     <rect>
+      <x>430</x>
+      <y>70</y>
+      <width>121</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>makeWall</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="DoorButton">
+    <property name="geometry">
+     <rect>
+      <x>570</x>
+      <y>70</y>
+      <width>71</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Door</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="WindowButton">
+    <property name="geometry">
+     <rect>
+      <x>660</x>
+      <y>70</y>
+      <width>71</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Window</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>942</width>
-     <height>20</height>
+     <width>1843</width>
+     <height>17</height>
     </rect>
    </property>
   </widget>
