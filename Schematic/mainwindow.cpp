@@ -11,6 +11,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
     scene = new QGraphicsScene(0, 0, 1000, 1000);
     ui->graphicsView->setScene(scene);
+
+    this->furniture.insert("refrigerator", Furniture("refrigerator","refri.png"));
+    this->furniture.insert("laundry", Furniture("laundry","laun.png"));
+    for(auto i : this->furniture)
+        this->ui->FurnitureList->addItem(i.getName());
 }
 
 
@@ -514,20 +519,84 @@ void MainWindow::bfs()
 
 void MainWindow::on_exit_clicked()
 { // close the application
-    QApplication::quit();
+    qApp->exit();
 }
 
 void MainWindow::on_save_clicked()
 {
+    QString fileName = QFileDialog::getSaveFileName(this,
+                                                    tr("Save Schematic"), "",
+                                                    tr("Schematic(*.sch);;All Files (*)"));
+    if(fileName.isEmpty()) return;
+    else {
+        QFile file(fileName);
+        if(!file.open(QIODevice::WriteOnly | QIODevice::Text)){
+            QMessageBox::information(this, tr("Unable to open file"),
+                                     file.errorString());
+            return;
+        }
+        QTextStream out(&file);
+
+        for(auto i : this->furniture)
+            out << "hash " << i.getName() << " " << i.getImageDir() << endl;
+
+        file.close();
+    }
+
     // toolBar.saveFile(); // data required
 }
 
 void MainWindow::on_open_clicked()
 {
-    // toolBar.openFile(); // how to put is required
+    QString fileName = QFileDialog::getOpenFileName(this,
+                                                    tr("Open Schematic"), "",
+                                                    tr("Schematic(*.sch);;All Files (*)"));
+    if(fileName.isEmpty()) return;
+    else {
+        QFile file(fileName);
+
+        if(!file.open(QIODevice::ReadOnly  | QIODevice::Text)){
+            QMessageBox::information(this, tr("Unable to open file"),
+                                     file.errorString());
+            return;
+        }
+        QTextStream in(&file);
+        QString temp;
+        while(!in.atEnd()){
+            in >> temp;
+            qDebug() << temp;
+            QString tag;
+            in >> tag;
+            if(tag == "hash"){
+                QString name;
+                QString img_src;
+                in >> name >> img_src;
+                this->furniture.insert(name, Furniture(name, img_src));
+                for(auto i : this->furniture)
+                    this->ui->FurnitureList->addItem(i.getName());
+            }
+
+        }
+        file.close();
+    }
 }
 
 void MainWindow::on_extraction_clicked()
 {
     toolBar.imageExtraction(this->ui->graphicsView);
+}
+
+void MainWindow::on_FurnitureList_itemDoubleClicked(QListWidgetItem *item)
+{
+    bool ok;
+    QString text = QInputDialog::getText(this, tr("Change key data"),
+                                         tr("name: "), QLineEdit::Normal,
+                                         item->text(), &ok);
+    if(ok && !text.isEmpty()){
+        this->furniture[item->text()].setName(text);
+        this->furniture.insert(text,this->furniture[item->text()]);
+        this->furniture.remove(text);
+        item->setText(text);
+    }
+
 }

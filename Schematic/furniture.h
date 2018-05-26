@@ -13,9 +13,11 @@ private:
     QString  name;
     QPointF  position;
     QRectF   size;
+    QString image_dir;
 
 
 public:
+    Furniture();
     Furniture(const QString& name, const QString imageFileName);
 
     int setName		(const QString& name);
@@ -27,6 +29,7 @@ public:
     QPointF  getPosition() const;
     QRectF   getSize()     const;
     QPixmap* getImage();
+    QString  getImageDir();
 
     bool isCollide(const QRectF& other);
 

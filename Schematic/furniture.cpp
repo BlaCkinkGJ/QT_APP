@@ -1,7 +1,12 @@
 #include "furniture.h"
 
+Furniture::Furniture(){
+    this->name = "undefined";
+}
+
 Furniture::Furniture(const QString& name, const QString imageFileName):name(name){
     QPixmap *pixmap = new QPixmap(imageFileName);
+    this->image_dir = imageFileName;
     this->image = pixmap;
 }
 
@@ -14,6 +19,13 @@ int Furniture::setName(const QString &name){
 int Furniture::setPosition(const QPointF &position){
     this->position = position;
     if(this->position.isNull()) return -1;
+    return 0;
+}
+
+int Furniture::setImage(const QString &imageFileName){
+    QPixmap *pixmap = new QPixmap(imageFileName);
+    if(pixmap->isNull()) return -1;
+    this->image = pixmap;
     return 0;
 }
 
@@ -44,6 +56,11 @@ QPixmap* Furniture::getImage(){
     return this->image;
 }
 
+QString Furniture::getImageDir(){
+    return this->image_dir;
+}
+
 Furniture::~Furniture(){
-    delete this->image;
+    if(!this->image->isNull())
+        delete this->image;
 }

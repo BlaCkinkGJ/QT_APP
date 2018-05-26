@@ -229,28 +229,6 @@
      <string>Reset</string>
     </property>
    </widget>
-   <widget class="QListView" name="FurnitureList">
-    <property name="geometry">
-     <rect>
-      <x>30</x>
-      <y>190</y>
-      <width>181</width>
-      <height>171</height>
-     </rect>
-    </property>
-    <property name="sizePolicy">
-     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-      <horstretch>0</horstretch>
-      <verstretch>0</verstretch>
-     </sizepolicy>
-    </property>
-    <property name="maximumSize">
-     <size>
-      <width>1920</width>
-      <height>1080</height>
-     </size>
-    </property>
-   </widget>
    <widget class="QLabel" name="label_4">
     <property name="geometry">
      <rect>
@@ -329,6 +307,16 @@
     </property>
     <property name="text">
      <string>exit</string>
+    </property>
+   </widget>
+   <widget class="QListWidget" name="FurnitureList">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>190</y>
+      <width>151</width>
+      <height>191</height>
+     </rect>
     </property>
    </widget>
   </widget>

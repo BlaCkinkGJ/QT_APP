@@ -25,6 +25,11 @@
 #include <QWidget>
 #include <queue>
 #include <cmath>
+#include <QHash>
+#include <QListWidgetItem>
+#include <QInputDialog>
+#include <QTextStream>
+#include "furniture.h"
 
 #include "tool.h"
 
@@ -67,6 +72,8 @@ private slots:
 
     void on_extraction_clicked();
 
+    void on_FurnitureList_itemDoubleClicked(QListWidgetItem *item);
+
 private:
     bool startDrawing = false;
     int wallDrawing = 0;
@@ -75,6 +82,7 @@ private:
     QMessageBox qmb;
     Ui::MainWindow *ui;
     tool toolBar;
+    QHash<QString, Furniture> furniture;
 /*
     SchScene *scene;
 */

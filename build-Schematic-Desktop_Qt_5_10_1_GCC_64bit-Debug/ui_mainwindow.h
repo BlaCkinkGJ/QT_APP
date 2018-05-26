@@ -17,7 +17,7 @@
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
-#include <QtWidgets/QListView>
+#include <QtWidgets/QListWidget>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
@@ -39,12 +39,12 @@ public:
     QPushButton *EnterButton;
     QGraphicsView *graphicsView;
     QPushButton *ResetButton;
-    QListView *FurnitureList;
     QLabel *label_4;
     QPushButton *save;
     QPushButton *open;
     QPushButton *extraction;
     QPushButton *exit_2;
+    QListWidget *FurnitureList;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -114,12 +114,6 @@ public:
         sizePolicy.setHeightForWidth(ResetButton->sizePolicy().hasHeightForWidth());
         ResetButton->setSizePolicy(sizePolicy);
         ResetButton->setMaximumSize(QSize(1920, 1080));
-        FurnitureList = new QListView(centralWidget);
-        FurnitureList->setObjectName(QStringLiteral("FurnitureList"));
-        FurnitureList->setGeometry(QRect(30, 190, 181, 171));
-        sizePolicy.setHeightForWidth(FurnitureList->sizePolicy().hasHeightForWidth());
-        FurnitureList->setSizePolicy(sizePolicy);
-        FurnitureList->setMaximumSize(QSize(1920, 1080));
         label_4 = new QLabel(centralWidget);
         label_4->setObjectName(QStringLiteral("label_4"));
         label_4->setGeometry(QRect(50, 150, 121, 31));
@@ -139,6 +133,9 @@ public:
         exit_2 = new QPushButton(centralWidget);
         exit_2->setObjectName(QStringLiteral("exit_2"));
         exit_2->setGeometry(QRect(70, 530, 100, 23));
+        FurnitureList = new QListWidget(centralWidget);
+        FurnitureList->setObjectName(QStringLiteral("FurnitureList"));
+        FurnitureList->setGeometry(QRect(40, 190, 151, 191));
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
