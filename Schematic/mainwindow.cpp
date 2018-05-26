@@ -603,11 +603,6 @@ void MainWindow::bfs()
     }
 }
 
-void MainWindow::on_exit_clicked()
-{ // close the application
-    qApp->exit();
-}
-
 void MainWindow::on_save_clicked()
 {
     QString fileName = QFileDialog::getSaveFileName(this,
@@ -625,6 +620,8 @@ void MainWindow::on_save_clicked()
 
         for(auto i : this->furniture)
             out << "hash " << i.getName() << " " << i.getImageDir() << endl;
+        for(int i  = 0; i < this->ui->listWidget->count(); i++ )
+            out << "list " << this->ui->listWidget->item(i)->text() << endl;
 
         file.close();
     }
@@ -648,9 +645,9 @@ void MainWindow::on_open_clicked()
         }
         QTextStream in(&file);
         QString temp;
-        while(!in.atEnd()){
-            in >> temp;
-            qDebug() << temp;
+        this->ui->FurnitureList->clear();
+        this->ui->listWidget->clear();
+        do{
             QString tag;
             in >> tag;
             if(tag == "hash"){
@@ -658,18 +655,33 @@ void MainWindow::on_open_clicked()
                 QString img_src;
                 in >> name >> img_src;
                 this->furniture.insert(name, Furniture(name, img_src));
-                for(auto i : this->furniture)
-                    this->ui->FurnitureList->addItem(i.getName());
+                this->ui->FurnitureList->addItem(name);
+            }
+            else if(tag == "list"){
+                QString temp;
+                in >> temp;
+                qDebug() << temp;
+                this->ui->listWidget->addItem(temp);
             }
 
-        }
+        }while(!in.atEnd());
         file.close();
     }
 }
 
 void MainWindow::on_extraction_clicked()
 {
-    toolBar.imageExtraction(this->ui->graphicsView);
+    QString fileName = QFileDialog::getSaveFileName(this,
+                                                    tr("Save Schematic"), "",
+                                                    tr("image(*.png);;All Files (*)"));
+    if(fileName.isEmpty())
+        return ; // invalid state
+    else {
+        QPixmap pix = QPixmap::grabWidget(this->ui->graphicsView);
+        if(pix.isNull()) return ;
+        pix.save(fileName);
+    return; // success}
+    }
 }
 
 void MainWindow::on_FurnitureList_itemDoubleClicked(QListWidgetItem *item)
@@ -685,4 +697,18 @@ void MainWindow::on_FurnitureList_itemDoubleClicked(QListWidgetItem *item)
         item->setText(text);
     }
 
+}
+
+void MainWindow::on_newfile_clicked()
+{
+    this->scene->clear();
+    this->furniture.clear();
+    this->roomList.clear();
+    this->experiorWall.clear();
+    this->interiorWall.clear();
+    this->windowList.clear();
+    this->doorList.clear();
+    this->ui->listWidget->clear();
+    this->ui->FurnitureList->clear();
+    this->on_ResetButton_clicked();
 }

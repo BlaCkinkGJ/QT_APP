@@ -1,2 +1,3 @@
-hash laundry 0x55555680e650
-hash refrigerator 0x5555568b3010
+hash refrigerator refri.png
+hash laundry laun.png
+list 1

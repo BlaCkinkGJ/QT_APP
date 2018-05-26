@@ -30,6 +30,7 @@
 #include <QInputDialog>
 #include <QTextStream>
 #include <QList>
+#include <QGuiApplication>
 
 #include "furniture.h"
 #include "tool.h"
@@ -65,8 +66,6 @@ private slots:
     void on_ResetButton_clicked();
 
 
-    void on_exit_clicked();
-
     void on_save_clicked();
 
     void on_open_clicked();
@@ -74,6 +73,8 @@ private slots:
     void on_extraction_clicked();
 
     void on_FurnitureList_itemDoubleClicked(QListWidgetItem *item);
+
+    void on_newfile_clicked();
 
 private:
     struct roomInformation

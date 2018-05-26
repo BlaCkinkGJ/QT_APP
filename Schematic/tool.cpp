@@ -1,5 +1,6 @@
-#include "tool.h"
 
+#include "tool.h"
+/*
 int tool::newFile(){
     // clear viewport and then set current class
     return 0;
@@ -45,7 +46,10 @@ int tool::openFile(buffer& sch){
     }
     return 0;
 }
-
+*/
+/*
+#ifndef TOOL_CPP
+#define TOOL_CPP
 int tool::imageExtraction(QGraphicsView* view){
     QString fileName = QFileDialog::getSaveFileName(this,
                                                     tr("Save Schematic"), "",
@@ -59,3 +63,6 @@ int tool::imageExtraction(QGraphicsView* view){
     }
     return 0; // success
 }
+
+#endif
+*/

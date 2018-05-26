@@ -12,9 +12,9 @@
 class tool : public QMainWindow
 {
 public:
-    int newFile(); // like fork
-    int saveFile(buffer& sch);
-    int openFile(buffer& sch);
+//    int newFile(); // like fork
+//    int saveFile(buffer& sch);
+//    int openFile(buffer& sch);
     int imageExtraction(QGraphicsView* view);
 
 

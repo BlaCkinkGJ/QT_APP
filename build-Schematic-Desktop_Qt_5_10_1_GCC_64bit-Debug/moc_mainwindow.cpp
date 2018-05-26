@@ -22,7 +22,7 @@ QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_MainWindow_t {
     QByteArrayData data[11];
-    char stringdata0[185];
+    char stringdata0[188];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -35,21 +35,20 @@ QT_MOC_LITERAL(0, 0, 10), // "MainWindow"
 QT_MOC_LITERAL(1, 11, 22), // "on_EnterButton_clicked"
 QT_MOC_LITERAL(2, 34, 0), // ""
 QT_MOC_LITERAL(3, 35, 22), // "on_ResetButton_clicked"
-QT_MOC_LITERAL(4, 58, 15), // "on_exit_clicked"
-QT_MOC_LITERAL(5, 74, 15), // "on_save_clicked"
-QT_MOC_LITERAL(6, 90, 15), // "on_open_clicked"
-QT_MOC_LITERAL(7, 106, 21), // "on_extraction_clicked"
-QT_MOC_LITERAL(8, 128, 34), // "on_FurnitureList_itemDoubleCl..."
-QT_MOC_LITERAL(9, 163, 16), // "QListWidgetItem*"
-QT_MOC_LITERAL(10, 180, 4) // "item"
+QT_MOC_LITERAL(4, 58, 15), // "on_save_clicked"
+QT_MOC_LITERAL(5, 74, 15), // "on_open_clicked"
+QT_MOC_LITERAL(6, 90, 21), // "on_extraction_clicked"
+QT_MOC_LITERAL(7, 112, 34), // "on_FurnitureList_itemDoubleCl..."
+QT_MOC_LITERAL(8, 147, 16), // "QListWidgetItem*"
+QT_MOC_LITERAL(9, 164, 4), // "item"
+QT_MOC_LITERAL(10, 169, 18) // "on_newfile_clicked"
 
     },
     "MainWindow\0on_EnterButton_clicked\0\0"
-    "on_ResetButton_clicked\0on_exit_clicked\0"
-    "on_save_clicked\0on_open_clicked\0"
-    "on_extraction_clicked\0"
+    "on_ResetButton_clicked\0on_save_clicked\0"
+    "on_open_clicked\0on_extraction_clicked\0"
     "on_FurnitureList_itemDoubleClicked\0"
-    "QListWidgetItem*\0item"
+    "QListWidgetItem*\0item\0on_newfile_clicked"
 };
 #undef QT_MOC_LITERAL
 
@@ -72,8 +71,8 @@ static const uint qt_meta_data_MainWindow[] = {
        4,    0,   51,    2, 0x08 /* Private */,
        5,    0,   52,    2, 0x08 /* Private */,
        6,    0,   53,    2, 0x08 /* Private */,
-       7,    0,   54,    2, 0x08 /* Private */,
-       8,    1,   55,    2, 0x08 /* Private */,
+       7,    1,   54,    2, 0x08 /* Private */,
+      10,    0,   57,    2, 0x08 /* Private */,
 
  // slots: parameters
     QMetaType::Void,
@@ -81,8 +80,8 @@ static const uint qt_meta_data_MainWindow[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
+    QMetaType::Void, 0x80000000 | 8,    9,
     QMetaType::Void,
-    QMetaType::Void, 0x80000000 | 9,   10,
 
        0        // eod
 };
@@ -95,11 +94,11 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         switch (_id) {
         case 0: _t->on_EnterButton_clicked(); break;
         case 1: _t->on_ResetButton_clicked(); break;
-        case 2: _t->on_exit_clicked(); break;
-        case 3: _t->on_save_clicked(); break;
-        case 4: _t->on_open_clicked(); break;
-        case 5: _t->on_extraction_clicked(); break;
-        case 6: _t->on_FurnitureList_itemDoubleClicked((*reinterpret_cast< QListWidgetItem*(*)>(_a[1]))); break;
+        case 2: _t->on_save_clicked(); break;
+        case 3: _t->on_open_clicked(); break;
+        case 4: _t->on_extraction_clicked(); break;
+        case 5: _t->on_FurnitureList_itemDoubleClicked((*reinterpret_cast< QListWidgetItem*(*)>(_a[1]))); break;
+        case 6: _t->on_newfile_clicked(); break;
         default: ;
         }
     }
