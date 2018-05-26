@@ -44,3 +44,17 @@ int tool::openFile(sample& sch){
     }
     return 0;
 }
+
+int tool::imageExtraction(QGraphicsView* view){
+    QString fileName = QFileDialog::getSaveFileName(this,
+                                                    tr("Save Schematic"), "",
+                                                    tr("image(*.png);;All Files (*)"));
+    if(fileName.isEmpty())
+        return -1; // invalid state
+    else {
+        QPixmap pix = QPixmap::grabWidget(view);
+        if(pix.isNull()) return -1;
+        pix.save(fileName);
+    }
+    return 0; // success
+}

@@ -19,7 +19,7 @@ public:
     int newFile(); // like fork
     int saveFile(sample& sch);
     int openFile(sample& sch);
-    int imageExtraction(const QGraphicsView& view);
+    int imageExtraction(QGraphicsView* view);
 
 
 };

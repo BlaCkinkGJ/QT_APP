@@ -20,6 +20,8 @@ public slots:
 
     void on_LoadButton_clicked();
 
+    void on_png_save_clicked();
+
 private:
     Ui::MainWindow *ui;
 };

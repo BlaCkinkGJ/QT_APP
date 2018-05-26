@@ -32,3 +32,13 @@ void MainWindow::on_LoadButton_clicked()
 
     ui->currentValue->setText(QString::number(sam.getValue()));
 }
+
+void MainWindow::on_png_save_clicked()
+{
+    QGraphicsScene *scene = new QGraphicsScene();
+    ui->view->setScene(scene);
+    scene->addRect(0, 0, 100, 200, QPen(Qt::black), QBrush(Qt::green));
+
+    tool toolbar;
+    toolbar.imageExtraction(ui->view);
+}
