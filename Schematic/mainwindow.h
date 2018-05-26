@@ -29,8 +29,9 @@
 #include <QListWidgetItem>
 #include <QInputDialog>
 #include <QTextStream>
-#include "furniture.h"
+#include <QList>
 
+#include "furniture.h"
 #include "tool.h"
 
 #define INF 987654321
@@ -75,6 +76,13 @@ private slots:
     void on_FurnitureList_itemDoubleClicked(QListWidgetItem *item);
 
 private:
+    struct roomInformation
+    {
+        int index;
+        QString name;
+        bool hasDoor = false;
+    };
+
     bool startDrawing = false;
     int wallDrawing = 0;
     int wallx1, wally1, wallx2, wally2;
@@ -83,21 +91,24 @@ private:
     Ui::MainWindow *ui;
     tool toolBar;
     QHash<QString, Furniture> furniture;
+    std::vector<roomInformation> roomList;
 /*
     SchScene *scene;
 */
+
+
 
     QGraphicsScene *scene;
     std::vector<QGraphicsLineItem *> experiorWall;
     std::vector<QGraphicsLineItem *> interiorWall;
     std::vector<QGraphicsLineItem *> windowList;
-    std::vector<QGraphicsRectItem *> doorList;
-    std::vector<std::vector<QGraphicsLineItem *> > room;
+    std::vector<QGraphicsLineItem *> doorList;
     void mousePressEvent(QMouseEvent *mouse);
     void mouseMoveEvent(QMouseEvent *mouseEvent);
     void mouseDoubleClickEvent(QMouseEvent *event);
     void keyPressEvent(QKeyEvent* event);
     void bfs();
+
 };
 
 #endif // MAINWINDOW_H

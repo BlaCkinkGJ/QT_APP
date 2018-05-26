@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1119</width>
-    <height>842</height>
+    <width>1396</width>
+    <height>782</height>
    </rect>
   </property>
   <property name="maximumSize">
@@ -318,6 +318,187 @@
       <height>191</height>
      </rect>
     </property>
+   <widget class="QLabel" name="alertLabel">
+    <property name="geometry">
+     <rect>
+      <x>430</x>
+      <y>70</y>
+      <width>441</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QListWidget" name="listWidget">
+    <property name="geometry">
+     <rect>
+      <x>1150</x>
+      <y>130</y>
+      <width>221</width>
+      <height>601</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QListWidget" name="listWidget_2">
+    <property name="geometry">
+     <rect>
+      <x>1070</x>
+      <y>130</y>
+      <width>81</width>
+      <height>601</height>
+     </rect>
+    </property>
+    <item>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="background">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>255</red>
+        <green>153</green>
+        <blue>128</blue>
+       </color>
+      </brush>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="background">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>251</red>
+        <green>231</green>
+        <blue>178</blue>
+       </color>
+      </brush>
+     </property>
+     <property name="foreground">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>251</red>
+        <green>231</green>
+        <blue>178</blue>
+       </color>
+      </brush>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="background">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>241</red>
+        <green>231</green>
+        <blue>136</blue>
+       </color>
+      </brush>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="background">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>175</red>
+        <green>227</green>
+        <blue>19</blue>
+       </color>
+      </brush>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="background">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>252</red>
+        <green>128</green>
+        <blue>165</blue>
+       </color>
+      </brush>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="background">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>157</red>
+        <green>224</green>
+        <blue>47</blue>
+       </color>
+      </brush>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="background">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>147</red>
+        <green>223</green>
+        <blue>184</blue>
+       </color>
+      </brush>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="background">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>0</red>
+        <green>204</green>
+        <blue>153</blue>
+       </color>
+      </brush>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="background">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>147</red>
+        <green>204</green>
+        <blue>143</blue>
+       </color>
+      </brush>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="background">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>118</red>
+        <green>110</green>
+        <blue>200</blue>
+       </color>
+      </brush>
+     </property>
+    </item>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
@@ -325,8 +506,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1119</width>
-     <height>20</height>
+     <width>1396</width>
+     <height>17</height>
     </rect>
    </property>
   </widget>

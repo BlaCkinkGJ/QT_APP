@@ -12,10 +12,6 @@
 class tool : public QMainWindow
 {
 public:
-
-private:
-
-public:
     int newFile(); // like fork
     int saveFile(buffer& sch);
     int openFile(buffer& sch);

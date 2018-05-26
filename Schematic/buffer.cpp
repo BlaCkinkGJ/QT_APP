@@ -3,20 +3,17 @@
 #include <QDebug>
 
 buffer::buffer(){
-    qDebug() << "nothing";
+    int nothing = 0;
     // ready to save state
 }
 
 
 
 void buffer::writeToFile(QDataStream& stream){
-
-    qDebug() << "nothing";
-    // something to read
+    int nothing = 0;
 }
 
 void buffer::readFromFile(QDataStream& stream){
-
-    qDebug() << "nothing";
+    int realNothing = 1;
     // something to write
 }
