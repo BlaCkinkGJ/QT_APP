@@ -105,6 +105,7 @@ void MainWindow::on_ResetButton_clicked()
     QPixmap pixmap = QPixmap::fromImage(image);
     scene->addPixmap(pixmap);
 
+    /*
     for(auto index : experiorWall)
     {
         scene->removeItem(index);
@@ -121,10 +122,13 @@ void MainWindow::on_ResetButton_clicked()
     {
         scene->removeItem(index);
     }
+    */
     experiorWall.clear();
     interiorWall.clear();
     windowList.clear();
     doorList.clear();
+    this->ui->listWidget->clear();
+    scene->clear();
     startDrawing = false;
 }
 
@@ -618,10 +622,19 @@ void MainWindow::on_save_clicked()
         }
         QTextStream out(&file);
 
+        out << "house " << houseWidth << " " << houseHeight << endl;
         for(auto i : this->furniture)
             out << "hash " << i.getName() << " " << i.getImageDir() << endl;
         for(int i  = 0; i < this->ui->listWidget->count(); i++ )
             out << "list " << this->ui->listWidget->item(i)->text() << endl;
+        for(auto i : this->experiorWall)
+            out << "exper " << i->line().x1() << " " << i->line().y1() << " " << i->line().x2() << " " << i->line().y2() << endl;
+        for(auto i : this->interiorWall)
+            out << "inter " << i->line().x1() << " " << i->line().y1() << " " << i->line().x2() << " " << i->line().y2() << endl;
+        for(auto i : this->windowList)
+            out << "wind " <<  i->line().x1() << " " << i->line().y1() << " " << i->line().x2() << " " << i->line().y2() << endl;
+        for(auto i : this->doorList)
+            out << "door " <<  i->line().x1() << " " << i->line().y1() << " " << i->line().x2() << " " << i->line().y2() << endl;
 
         file.close();
     }
@@ -647,6 +660,7 @@ void MainWindow::on_open_clicked()
         QString temp;
         this->ui->FurnitureList->clear();
         this->ui->listWidget->clear();
+        this->scene->clear();
         do{
             QString tag;
             in >> tag;
@@ -663,9 +677,44 @@ void MainWindow::on_open_clicked()
                 qDebug() << temp;
                 this->ui->listWidget->addItem(temp);
             }
-
+            else if(tag == "exper"){
+                QPen outlinePen(Qt::red);
+                QBrush brush(Qt::red);
+                int x1, y1, x2, y2;
+                in >> x1 >> y1 >> x2 >> y2;
+                this->experiorWall.push_back(scene->addLine(x1, y1, x2, y2, outlinePen));
+            }
+            else if(tag == "inter"){
+                QPen outlinePen(Qt::red);
+                outlinePen.setWidth(1);
+                int x1, y1, x2, y2;
+                in >> x1 >> y1 >> x2 >> y2;
+                this->interiorWall.push_back(scene->addLine(x1, y1, x2, y2, outlinePen));
+            }
+            else if(tag == "wind"){
+                QPen outlinePen(qRgb(51, 255, 255));
+                outlinePen.setWidth(20);
+                int x1, y1, x2, y2;
+                in >> x1 >> y1 >> x2 >> y2;
+                this->windowList.push_back(scene->addLine(x1, y1, x2, y2, outlinePen));
+            }
+            else if(tag == "door"){
+                QPen outlinePen(qRgb(255, 127, 0));
+                outlinePen.setWidth(20);
+                int x1, y1, x2, y2;
+                in >> x1 >> y1 >> x2 >> y2;
+                this->doorList.push_back(scene->addLine(x1, y1, x2, y2, outlinePen));
+            }
+            else if(tag == "house"){
+                int width, height;
+                in >> width >> height;
+                this->ui->lineEdit->setText(QString::number(width/10));
+                this->ui->lineEdit_2->setText(QString::number(height/10));
+                qDebug() << width << " " << height << endl;
+           }
         }while(!in.atEnd());
         file.close();
+        this->on_EnterButton_clicked();
     }
 }
 
@@ -711,4 +760,13 @@ void MainWindow::on_newfile_clicked()
     this->ui->listWidget->clear();
     this->ui->FurnitureList->clear();
     this->on_ResetButton_clicked();
+}
+
+void MainWindow::on_listWidget_itemDoubleClicked(QListWidgetItem *item)
+{
+    bool ok;
+    QString text = QInputDialog::getText(this, tr("Change data"),
+                                         tr("data: "), QLineEdit::Normal,
+                                         item->text(), &ok);
+    item->setText(text);
 }

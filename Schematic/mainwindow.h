@@ -76,6 +76,8 @@ private slots:
 
     void on_newfile_clicked();
 
+    void on_listWidget_itemDoubleClicked(QListWidgetItem *item);
+
 private:
     struct roomInformation
     {
