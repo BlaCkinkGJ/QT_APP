@@ -341,155 +341,6 @@
       <height>601</height>
      </rect>
     </property>
-    <item>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="background">
-      <brush brushstyle="SolidPattern">
-       <color alpha="255">
-        <red>255</red>
-        <green>153</green>
-        <blue>128</blue>
-       </color>
-      </brush>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="background">
-      <brush brushstyle="SolidPattern">
-       <color alpha="255">
-        <red>251</red>
-        <green>231</green>
-        <blue>178</blue>
-       </color>
-      </brush>
-     </property>
-     <property name="foreground">
-      <brush brushstyle="SolidPattern">
-       <color alpha="255">
-        <red>251</red>
-        <green>231</green>
-        <blue>178</blue>
-       </color>
-      </brush>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="background">
-      <brush brushstyle="SolidPattern">
-       <color alpha="255">
-        <red>241</red>
-        <green>231</green>
-        <blue>136</blue>
-       </color>
-      </brush>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="background">
-      <brush brushstyle="SolidPattern">
-       <color alpha="255">
-        <red>175</red>
-        <green>227</green>
-        <blue>19</blue>
-       </color>
-      </brush>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="background">
-      <brush brushstyle="SolidPattern">
-       <color alpha="255">
-        <red>252</red>
-        <green>128</green>
-        <blue>165</blue>
-       </color>
-      </brush>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="background">
-      <brush brushstyle="SolidPattern">
-       <color alpha="255">
-        <red>157</red>
-        <green>224</green>
-        <blue>47</blue>
-       </color>
-      </brush>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="background">
-      <brush brushstyle="SolidPattern">
-       <color alpha="255">
-        <red>147</red>
-        <green>223</green>
-        <blue>184</blue>
-       </color>
-      </brush>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="background">
-      <brush brushstyle="SolidPattern">
-       <color alpha="255">
-        <red>0</red>
-        <green>204</green>
-        <blue>153</blue>
-       </color>
-      </brush>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="background">
-      <brush brushstyle="SolidPattern">
-       <color alpha="255">
-        <red>147</red>
-        <green>204</green>
-        <blue>143</blue>
-       </color>
-      </brush>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="background">
-      <brush brushstyle="SolidPattern">
-       <color alpha="255">
-        <red>118</red>
-        <green>110</green>
-        <blue>200</blue>
-       </color>
-      </brush>
-     </property>
-    </item>
    </widget>
    <widget class="QListWidget" name="FurnitureList">
     <property name="geometry">
@@ -499,6 +350,34 @@
       <width>181</width>
       <height>201</height>
      </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_5">
+    <property name="geometry">
+     <rect>
+      <x>60</x>
+      <y>600</y>
+      <width>121</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>1920</width>
+      <height>1080</height>
+     </size>
+    </property>
+    <property name="text">
+     <string>Default</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
     </property>
    </widget>
   </widget>

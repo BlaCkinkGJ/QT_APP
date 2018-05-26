@@ -15,8 +15,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     scene = new QGraphicsScene(0, 0, 1000, 1000);
     ui->graphicsView->setScene(scene);
 
-    this->furniture.insert("refrigerator", Furniture("refrigerator","refri.png"));
-    this->furniture.insert("laundry", Furniture("laundry","laun.png"));
+    this->furniture.insert("refrigerator", Furniture("refrigerator",
+                  "refri.PNG"));
+    this->furniture.insert("laundry", Furniture("laundry",
+                  "laun.PNG"));
     for(auto i : this->furniture)
         this->ui->FurnitureList->addItem(i.getName());
 }
@@ -34,32 +36,45 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
     {
         if(wallDrawing == 1)
         {
+            ui->label_5->setText("Default");
             wallDrawing = 0;
             return;
         }
+        ui->label_5->setText("Make Wall");
         wallDrawing = 1;
     }
     else if (event->key() == Qt::Key_2)
     {
         if(wallDrawing == 3)
         {
+            ui->label_5->setText("Default");
             wallDrawing = 0;
             return;
         }
+        ui->label_5->setText("Make Door");
         wallDrawing = 3;
     }
     else if (event->key() == Qt::Key_3)
     {
         if(wallDrawing == 4)
         {
+            ui->label_5->setText("Default");
             wallDrawing = 0;
             return;
         }
+        ui->label_5->setText("Make Window");
         wallDrawing = 4;
     }
     else if (event->key() == Qt::Key_4)
     {
+        ui->label_5->setText("Default");
         bfs();
+        wallDrawing = 0;
+    }
+    else if (event->key() == Qt::Key_5)
+    {
+        ui->label_5->setText("Default");
+        loadFunction();
         wallDrawing = 0;
     }
 }
@@ -130,6 +145,9 @@ void MainWindow::on_ResetButton_clicked()
     this->ui->listWidget->clear();
     scene->clear();
     startDrawing = false;
+
+    ui->listWidget->clear();
+    ui->listWidget_2->clear();
 }
 
 void MainWindow::mousePressEvent(QMouseEvent *mouse)
@@ -446,22 +464,41 @@ void MainWindow::mousePressEvent(QMouseEvent *mouse)
             }
         }
     }
-}
+    else if(wallDrawing == 9)
+    {
+        QPixmap qPix = QPixmap::grabWidget(ui->graphicsView, 0, 0, 1001, 1001);
+        QImage image(qPix.toImage());
 
-void MainWindow::mouseMoveEvent(QMouseEvent *mouseEvent)
-{
-    QPoint origin = ui->graphicsView->mapFromGlobal(QCursor::pos());
-    QPointF relativeOrigin = ui->graphicsView->mapToScene(origin);
+        for(int i=x; i<=x+item->boundingRect().width() * imageScale; i++)
+            for(int j=y; j<=x+item->boundingRect().height() * imageScale; j++)
+            {
+                QColor color(image.pixelColor(i, j));
+                if(color == qRgb(255, 0, 0) || color == qRgb(0, 0, 255) ||
+                        color == qRgb(255, 127, 0) || color == qRgb(51, 255, 255))
+                {
+                    qmb.setText("Can't establish here.");
+                    qmb.exec();
+                    return;
+                }
+            }
 
-    int x = relativeOrigin.x();
-    int y = relativeOrigin.y();
+        item->setPos(x, y);
+        this->scene->addItem(item);
+        ui->label_5->setText("Default");
+        wallDrawing = 0;
 
-    //ui->lineEdit->setText(QString::number(x)); -> deleted debug mode
+        for(int i = x; i <= x + item->boundingRect().width() * imageScale; i++)
+            for(int j = y; j <= y + item->boundingRect().height() * imageScale; j++)
+                roomColor[i][j] = -5;
+    }
 }
 
 void MainWindow::mouseDoubleClickEvent(QMouseEvent *event)
 {
-    if(!(wallDrawing == 1 || wallDrawing == 2)) return;
+    if(!(wallDrawing == 1 || wallDrawing == 2))
+    {
+        return;
+    }
 
     double length;
 
@@ -493,6 +530,8 @@ void MainWindow::mouseDoubleClickEvent(QMouseEvent *event)
 void MainWindow::bfs()
 {
     roomList.clear();
+    ui->listWidget->clear();
+    ui->listWidget_2->clear();
 
     QPixmap qPix = QPixmap::grabWidget(ui->graphicsView, 0, 0, 1001, 1001);
     QImage image(qPix.toImage());
@@ -520,7 +559,8 @@ void MainWindow::bfs()
         {
             QColor color(image.pixelColor(i, j));
             // if(roomColor[i][j] == 0)
-            if(color.blue() == 255 && color.red() == 255 && color.green() == 255)
+            if(color.blue() == 255 && color.red() == 255 && color.green() == 255
+                    && roomColor[i][j] != -5)
             {
                 std::queue<std::pair<int, int> > temp;
                 temp.push(std::make_pair(i, j));
@@ -532,8 +572,9 @@ void MainWindow::bfs()
                         if(addRoom.index)
                         {
                             ui->listWidget->addItem(addRoom.name);
-                            // QList ql = ui->listWidget_2->selectedItems();
-
+                            ui->listWidget_2->addItem("");
+                            ui->listWidget_2->item(addRoom.index - 1)->setBackground(
+                                        QBrush(val[addRoom.index] ,Qt::SolidPattern));
                         }
                         addRoom.index = ++count;
                         addRoom.name = QString::number(addRoom.index);
@@ -550,7 +591,7 @@ void MainWindow::bfs()
                         int y = ty + dy[k];
                         if(x < 0 || y < 0 || x > houseWidth || y > houseHeight) continue;
                         QColor color2(image.pixelColor(x, y));
-                        // if(roomColor[x][y]) continue;
+                        if(roomColor[x][y] == -5) continue;
                         if(color2 == qRgb(51, 255, 255) || color2 == qRgb(255, 127, 0))
                         {
                             addRoom.hasDoor = true;
@@ -607,6 +648,106 @@ void MainWindow::bfs()
     }
 }
 
+void MainWindow::loadFunction()
+{
+    ui->listWidget->clear();
+    ui->listWidget_2->clear();
+
+    QPixmap qPix = QPixmap::grabWidget(ui->graphicsView, 0, 0, 1001, 1001);
+    QImage image(qPix.toImage());
+
+    QRgb val = qRgb(255, 255 ,255);
+
+    for(int i = 0; i <= 1000; i++)
+        for(int j = 0; j <= 1000; j++)
+            image.setPixelColor(i, j,  val);
+
+    QPixmap pixmap = QPixmap::fromImage(image);
+    scene->addPixmap(pixmap);
+
+    for(auto index : experiorWall)
+    {
+        int tx1 = index->line().toLine().x1() < index->line().toLine().x2() ?
+                    index->line().toLine().x1() : index->line().toLine().x2();
+        int tx2 = tx1 == index->line().toLine().x2() ?
+                    index->line().toLine().x1() : index->line().toLine().x2();
+        int ty1 = index->line().toLine().y1() < index->line().toLine().y2() ?
+                    index->line().toLine().y1() : index->line().toLine().y2();
+        int ty2 = ty1 == index->line().toLine().y2() ?
+                    index->line().toLine().y1() : index->line().toLine().y2();
+        for(int i = tx1; i <= tx2; i++)
+            for(int j = ty1; j <= ty2; j++)
+                image.setPixelColor(i, j, qRgb(0, 0, 255));
+    }
+
+    for(auto index : interiorWall)
+    {
+        int tx1 = index->line().toLine().x1() < index->line().toLine().x2() ?
+                    index->line().toLine().x1() : index->line().toLine().x2();
+        int tx2 = tx1 == index->line().toLine().x2() ?
+                    index->line().toLine().x1() : index->line().toLine().x2();
+        int ty1 = index->line().toLine().y1() < index->line().toLine().y2() ?
+                    index->line().toLine().y1() : index->line().toLine().y2();
+        int ty2 = ty1 == index->line().toLine().y2() ?
+                    index->line().toLine().y1() : index->line().toLine().y2();
+        for(int i = tx1; i <= tx2; i++)
+            for(int j = ty1; j <= ty2; j++)
+                image.setPixelColor(i, j, qRgb(255, 0, 0));
+    }
+
+    for(auto index : windowList)
+    {
+        if(index->line().toLine().x1() == index->line().toLine().x2())
+        {
+            int ty1 = index->line().toLine().y1() < index->line().toLine().y2() ?
+                        index->line().toLine().y1() : index->line().toLine().y2();
+            int ty2 = ty1 == index->line().toLine().y2() ?
+                        index->line().toLine().y1() : index->line().toLine().y2();
+            for(int i=index->line().toLine().x1() - 10; i<=index->line().toLine().x1() + 10; i++)
+                for(int j=ty1 - 10; j<=ty2 + 10; j++)
+                    image.setPixel(i, j, qRgb(51, 255, 255));
+        }
+        else
+        {
+            int tx1 = index->line().toLine().x1() < index->line().toLine().x2() ?
+                        index->line().toLine().x1() : index->line().toLine().x2();
+            int tx2 = tx1 == index->line().toLine().x2() ?
+                        index->line().toLine().x1() : index->line().toLine().x2();
+            for(int i=index->line().toLine().y1() - 10; i<=index->line().toLine().y1() + 10; i++)
+                for(int j=tx1-10; j<=tx2+10; j++)
+                    image.setPixel(j, i, qRgb(51, 255, 255));
+        }
+    }
+
+    for(auto index : doorList)
+    {
+        if(index->line().toLine().x1() == index->line().toLine().x2())
+        {
+            int ty1 = index->line().toLine().y1() < index->line().toLine().y2() ?
+                        index->line().toLine().y1() : index->line().toLine().y2();
+            int ty2 = ty1 == index->line().toLine().y2() ?
+                        index->line().toLine().y1() : index->line().toLine().y2();
+            for(int i=index->line().toLine().x1() - 10; i<=index->line().toLine().x1() + 10; i++)
+                for(int j=ty1-10; j<=ty2+10; j++)
+                    image.setPixel(i, j, qRgb(255, 127, 0));
+        }
+        else
+        {
+            int tx1 = index->line().toLine().x1() < index->line().toLine().x2() ?
+                        index->line().toLine().x1() : index->line().toLine().x2();
+            int tx2 = tx1 == index->line().toLine().x2() ?
+                        index->line().toLine().x1() : index->line().toLine().x2();
+            for(int i=index->line().toLine().y1() - 10; i<=index->line().toLine().y1() + 10; i++)
+                for(int j=tx1-10; j<=tx2+10; j++)
+                    image.setPixel(j, i, qRgb(255, 127, 0));
+        }
+    }
+
+    pixmap = QPixmap::fromImage(image);
+    scene->addPixmap(pixmap);
+}
+
+
 void MainWindow::on_save_clicked()
 {
     QString fileName = QFileDialog::getSaveFileName(this,
@@ -638,8 +779,6 @@ void MainWindow::on_save_clicked()
 
         file.close();
     }
-
-    // toolBar.saveFile(); // data required
 }
 
 void MainWindow::on_open_clicked()
@@ -745,7 +884,6 @@ void MainWindow::on_FurnitureList_itemDoubleClicked(QListWidgetItem *item)
         this->furniture.remove(text);
         item->setText(text);
     }
-
 }
 
 void MainWindow::on_newfile_clicked()
@@ -760,6 +898,27 @@ void MainWindow::on_newfile_clicked()
     this->ui->listWidget->clear();
     this->ui->FurnitureList->clear();
     this->on_ResetButton_clicked();
+}
+
+void MainWindow::on_FurnitureList_itemSelectionChanged()
+{
+    if(!startDrawing) return;
+
+    QInputDialog *dial;
+    bool ok;
+    QString scale = dial->getText(this, tr("Change key data"),
+                              tr("scale: "), QLineEdit::Normal,
+                              "", &ok);
+
+    Furniture sample("Sample", QDir().absolutePath()+QString("/") +
+                     QString(furniture[ui->FurnitureList->selectedItems().at(0)->text()].getImageDir()));
+    QPixmap *map = sample.getImage();
+    item = new QGraphicsPixmapItem(*map);
+    item->setScale(scale.toDouble());
+    imageScale = scale.toDouble();
+
+    ui->label_5->setText("Furniture");
+    wallDrawing = 9;
 }
 
 void MainWindow::on_listWidget_itemDoubleClicked(QListWidgetItem *item)

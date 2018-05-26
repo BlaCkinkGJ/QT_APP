@@ -31,6 +31,8 @@
 #include <QTextStream>
 #include <QList>
 #include <QGuiApplication>
+#include <QListView>
+#include <QLabel>
 
 #include "furniture.h"
 #include "tool.h"
@@ -47,6 +49,8 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+
+    QGraphicsPixmapItem* item;
 
 /*
 public slots:
@@ -76,6 +80,7 @@ private slots:
 
     void on_newfile_clicked();
 
+    void on_FurnitureList_itemSelectionChanged();
     void on_listWidget_itemDoubleClicked(QListWidgetItem *item);
 
 private:
@@ -90,6 +95,7 @@ private:
     int wallDrawing = 0;
     int wallx1, wally1, wallx2, wally2;
     int houseWidth, houseHeight;
+    double imageScale;
     QMessageBox qmb;
     Ui::MainWindow *ui;
     tool toolBar;
@@ -98,20 +104,16 @@ private:
 /*
     SchScene *scene;
 */
-
-
-
     QGraphicsScene *scene;
     std::vector<QGraphicsLineItem *> experiorWall;
     std::vector<QGraphicsLineItem *> interiorWall;
     std::vector<QGraphicsLineItem *> windowList;
     std::vector<QGraphicsLineItem *> doorList;
     void mousePressEvent(QMouseEvent *mouse);
-    void mouseMoveEvent(QMouseEvent *mouseEvent);
     void mouseDoubleClickEvent(QMouseEvent *event);
     void keyPressEvent(QKeyEvent* event);
     void bfs();
-
+    void loadFunction();
 };
 
 #endif // MAINWINDOW_H
