@@ -5,6 +5,8 @@
 
 class sample
 {
+private:
+
 
 public:
     sample(int value);

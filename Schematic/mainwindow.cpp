@@ -2,7 +2,7 @@
 #include "ui_mainwindow.h"
 
 bool dir; // Not useful
-int roomColor[2000][2000];
+int roomColor[2000][2000]; // ----- > to make a 800 x 600
 int state = 0;
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
@@ -426,7 +426,7 @@ void MainWindow::mouseMoveEvent(QMouseEvent *mouseEvent)
     int x = relativeOrigin.x();
     int y = relativeOrigin.y();
 
-    ui->lineEdit->setText(QString::number(x));
+    //ui->lineEdit->setText(QString::number(x)); -> deleted debug mode
 }
 
 void MainWindow::mouseDoubleClickEvent(QMouseEvent *event)

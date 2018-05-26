@@ -5,7 +5,7 @@ int tool::newFile(){
 }
 
 
-int tool::saveFile(sample& sch){
+int tool::saveFile(buffer& sch){
     QString fileName = QFileDialog::getSaveFileName(this,
                                                     tr("Save Schematic"), "",
                                                     tr("Schematic(*.sch);;All Files (*)"));
@@ -19,12 +19,12 @@ int tool::saveFile(sample& sch){
             return -1;
         }
         QDataStream out(&file);
-        out << QString::number(sch.getValue()); // you have to make operator overloading
+        sch.writeToFile(out); // you have to make operator overloading
     }
     return 0; // success
 }
 
-int tool::openFile(sample& sch){
+int tool::openFile(buffer& sch){
     QString fileName = QFileDialog::getOpenFileName(this,
                                                     tr("Open Schematic"), "",
                                                     tr("Schematic(*.sch);;All Files (*)"));
@@ -40,7 +40,7 @@ int tool::openFile(sample& sch){
         }
         QDataStream in(&file);
         //sch.clear();
-        sch.setValue(in);
+        sch.readFromFile(in);
     }
     return 0;
 }

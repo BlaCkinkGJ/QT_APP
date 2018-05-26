@@ -29,14 +29,16 @@ SOURCES += \
     tool.cpp \
     sample.cpp \
     furniture.cpp \
-    schscene.cpp
+    schscene.cpp \
+    buffer.cpp
 
 HEADERS += \
         mainwindow.h \
     tool.h \
     sample.h \
     furniture.h \
-    schscene.h
+    schscene.h \
+    buffer.h
 
 FORMS += \
         mainwindow.ui
