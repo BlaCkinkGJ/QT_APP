@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_MainWindow_t {
-    QByteArrayData data[7];
-    char stringdata0[112];
+    QByteArrayData data[4];
+    char stringdata0[58];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -32,17 +32,13 @@ struct qt_meta_stringdata_MainWindow_t {
 static const qt_meta_stringdata_MainWindow_t qt_meta_stringdata_MainWindow = {
     {
 QT_MOC_LITERAL(0, 0, 10), // "MainWindow"
-QT_MOC_LITERAL(1, 11, 21), // "on_saveButton_clicked"
-QT_MOC_LITERAL(2, 33, 0), // ""
-QT_MOC_LITERAL(3, 34, 21), // "on_LoadButton_clicked"
-QT_MOC_LITERAL(4, 56, 19), // "on_png_save_clicked"
-QT_MOC_LITERAL(5, 76, 19), // "on_getImage_clicked"
-QT_MOC_LITERAL(6, 96, 15) // "on_move_clicked"
+QT_MOC_LITERAL(1, 11, 22), // "on_EnterButton_clicked"
+QT_MOC_LITERAL(2, 34, 0), // ""
+QT_MOC_LITERAL(3, 35, 22) // "on_ResetButton_clicked"
 
     },
-    "MainWindow\0on_saveButton_clicked\0\0"
-    "on_LoadButton_clicked\0on_png_save_clicked\0"
-    "on_getImage_clicked\0on_move_clicked"
+    "MainWindow\0on_EnterButton_clicked\0\0"
+    "on_ResetButton_clicked"
 };
 #undef QT_MOC_LITERAL
 
@@ -52,7 +48,7 @@ static const uint qt_meta_data_MainWindow[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-       5,   14, // methods
+       2,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -60,16 +56,10 @@ static const uint qt_meta_data_MainWindow[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    0,   39,    2, 0x0a /* Public */,
-       3,    0,   40,    2, 0x0a /* Public */,
-       4,    0,   41,    2, 0x0a /* Public */,
-       5,    0,   42,    2, 0x08 /* Private */,
-       6,    0,   43,    2, 0x08 /* Private */,
+       1,    0,   24,    2, 0x08 /* Private */,
+       3,    0,   25,    2, 0x08 /* Private */,
 
  // slots: parameters
-    QMetaType::Void,
-    QMetaType::Void,
-    QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
 
@@ -82,11 +72,8 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         MainWindow *_t = static_cast<MainWindow *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
-        case 0: _t->on_saveButton_clicked(); break;
-        case 1: _t->on_LoadButton_clicked(); break;
-        case 2: _t->on_png_save_clicked(); break;
-        case 3: _t->on_getImage_clicked(); break;
-        case 4: _t->on_move_clicked(); break;
+        case 0: _t->on_EnterButton_clicked(); break;
+        case 1: _t->on_ResetButton_clicked(); break;
         default: ;
         }
     }
@@ -118,13 +105,13 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 5)
+        if (_id < 2)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 5;
+        _id -= 2;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 5)
+        if (_id < 2)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 5;
+        _id -= 2;
     }
     return _id;
 }

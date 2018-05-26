@@ -23,7 +23,8 @@
 #include <QRgb>
 #include <QImage>
 #include <QWidget>
-#include <Queue>
+#include <queue>
+#include <cmath>
 
 #define INF 987654321
 namespace Ui {
@@ -77,7 +78,7 @@ private:
     void mouseMoveEvent(QMouseEvent *mouseEvent);
     void mouseDoubleClickEvent(QMouseEvent *event);
     void keyPressEvent(QKeyEvent* event);
-    void MainWindow::bfs();
+    void bfs();
 };
 
 #endif // MAINWINDOW_H
