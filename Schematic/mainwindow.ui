@@ -76,6 +76,39 @@
      </rect>
     </property>
    </widget>
+   <widget class="QPushButton" name="getImage">
+    <property name="geometry">
+     <rect>
+      <x>150</x>
+      <y>260</y>
+      <width>83</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>getImage</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="move">
+    <property name="geometry">
+     <rect>
+      <x>90</x>
+      <y>320</y>
+      <width>83</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>move</string>
+    </property>
+   </widget>
+   <zorder>view</zorder>
+   <zorder>saveButton</zorder>
+   <zorder>LoadButton</zorder>
+   <zorder>currentValue</zorder>
+   <zorder>png_save</zorder>
+   <zorder>getImage</zorder>
+   <zorder>move</zorder>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">

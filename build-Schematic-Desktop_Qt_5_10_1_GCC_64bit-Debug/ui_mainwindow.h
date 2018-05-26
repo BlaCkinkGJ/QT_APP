@@ -34,6 +34,8 @@ public:
     QLabel *currentValue;
     QPushButton *png_save;
     QGraphicsView *view;
+    QPushButton *getImage;
+    QPushButton *move;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -60,7 +62,20 @@ public:
         view = new QGraphicsView(centralWidget);
         view->setObjectName(QStringLiteral("view"));
         view->setGeometry(QRect(280, 70, 501, 311));
+        getImage = new QPushButton(centralWidget);
+        getImage->setObjectName(QStringLiteral("getImage"));
+        getImage->setGeometry(QRect(150, 260, 83, 23));
+        move = new QPushButton(centralWidget);
+        move->setObjectName(QStringLiteral("move"));
+        move->setGeometry(QRect(90, 320, 83, 23));
         MainWindow->setCentralWidget(centralWidget);
+        view->raise();
+        saveButton->raise();
+        LoadButton->raise();
+        currentValue->raise();
+        png_save->raise();
+        getImage->raise();
+        move->raise();
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
         menuBar->setGeometry(QRect(0, 0, 942, 20));
@@ -84,6 +99,8 @@ public:
         LoadButton->setText(QApplication::translate("MainWindow", "LoadButton", nullptr));
         currentValue->setText(QApplication::translate("MainWindow", "value", nullptr));
         png_save->setText(QApplication::translate("MainWindow", "png save", nullptr));
+        getImage->setText(QApplication::translate("MainWindow", "getImage", nullptr));
+        move->setText(QApplication::translate("MainWindow", "move", nullptr));
     } // retranslateUi
 
 };

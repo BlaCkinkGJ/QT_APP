@@ -27,12 +27,16 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
     tool.cpp \
-    sample.cpp
+    sample.cpp \
+    furniture.cpp \
+    schscene.cpp
 
 HEADERS += \
         mainwindow.h \
     tool.h \
-    sample.h
+    sample.h \
+    furniture.h \
+    schscene.h
 
 FORMS += \
         mainwindow.ui
