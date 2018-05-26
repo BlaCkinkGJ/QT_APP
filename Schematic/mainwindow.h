@@ -23,7 +23,10 @@
 #include <QRgb>
 #include <QImage>
 #include <QWidget>
-#include <Queue>
+#include <queue>
+#include <cmath>
+
+#include "tool.h"
 
 #define INF 987654321
 namespace Ui {
@@ -56,6 +59,14 @@ private slots:
     void on_ResetButton_clicked();
 
 
+    void on_exit_clicked();
+
+    void on_save_clicked();
+
+    void on_open_clicked();
+
+    void on_extraction_clicked();
+
 private:
     bool startDrawing = false;
     int wallDrawing = 0;
@@ -63,6 +74,7 @@ private:
     int houseWidth, houseHeight;
     QMessageBox qmb;
     Ui::MainWindow *ui;
+    tool toolBar;
 /*
     SchScene *scene;
 */
@@ -77,7 +89,7 @@ private:
     void mouseMoveEvent(QMouseEvent *mouseEvent);
     void mouseDoubleClickEvent(QMouseEvent *event);
     void keyPressEvent(QKeyEvent* event);
-    void MainWindow::bfs();
+    void bfs();
 };
 
 #endif // MAINWINDOW_H

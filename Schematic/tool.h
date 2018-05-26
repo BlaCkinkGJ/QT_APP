@@ -7,7 +7,7 @@
 #include <QFileDialog>
 #include <QMessageBox>
 
-#include "sample.h"
+#include "buffer.h"
 
 class tool : public QMainWindow
 {
@@ -17,8 +17,8 @@ private:
 
 public:
     int newFile(); // like fork
-    int saveFile(sample& sch);
-    int openFile(sample& sch);
+    int saveFile(buffer& sch);
+    int openFile(buffer& sch);
     int imageExtraction(QGraphicsView* view);
 
 

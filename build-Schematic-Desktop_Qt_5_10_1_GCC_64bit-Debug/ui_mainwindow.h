@@ -16,6 +16,8 @@
 #include <QtWidgets/QGraphicsView>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
+#include <QtWidgets/QLineEdit>
+#include <QtWidgets/QListView>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
@@ -29,13 +31,20 @@ class Ui_MainWindow
 {
 public:
     QWidget *centralWidget;
-    QPushButton *saveButton;
-    QPushButton *LoadButton;
-    QLabel *currentValue;
-    QPushButton *png_save;
-    QGraphicsView *view;
-    QPushButton *getImage;
-    QPushButton *move;
+    QLabel *label;
+    QLabel *label_2;
+    QLabel *label_3;
+    QLineEdit *lineEdit;
+    QLineEdit *lineEdit_2;
+    QPushButton *EnterButton;
+    QGraphicsView *graphicsView;
+    QPushButton *ResetButton;
+    QListView *FurnitureList;
+    QLabel *label_4;
+    QPushButton *save;
+    QPushButton *open;
+    QPushButton *extraction;
+    QPushButton *exit_2;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -44,41 +53,96 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(942, 524);
+        MainWindow->resize(1119, 842);
+        MainWindow->setMaximumSize(QSize(1920, 1080));
+        MainWindow->setAutoFillBackground(false);
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
-        saveButton = new QPushButton(centralWidget);
-        saveButton->setObjectName(QStringLiteral("saveButton"));
-        saveButton->setGeometry(QRect(30, 190, 83, 23));
-        LoadButton = new QPushButton(centralWidget);
-        LoadButton->setObjectName(QStringLiteral("LoadButton"));
-        LoadButton->setGeometry(QRect(150, 190, 83, 23));
-        currentValue = new QLabel(centralWidget);
-        currentValue->setObjectName(QStringLiteral("currentValue"));
-        currentValue->setGeometry(QRect(80, 110, 68, 15));
-        png_save = new QPushButton(centralWidget);
-        png_save->setObjectName(QStringLiteral("png_save"));
-        png_save->setGeometry(QRect(30, 250, 83, 23));
-        view = new QGraphicsView(centralWidget);
-        view->setObjectName(QStringLiteral("view"));
-        view->setGeometry(QRect(280, 70, 501, 311));
-        getImage = new QPushButton(centralWidget);
-        getImage->setObjectName(QStringLiteral("getImage"));
-        getImage->setGeometry(QRect(150, 260, 83, 23));
-        move = new QPushButton(centralWidget);
-        move->setObjectName(QStringLiteral("move"));
-        move->setGeometry(QRect(90, 320, 83, 23));
+        label = new QLabel(centralWidget);
+        label->setObjectName(QStringLiteral("label"));
+        label->setGeometry(QRect(10, 10, 361, 21));
+        QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+        sizePolicy.setHorizontalStretch(0);
+        sizePolicy.setVerticalStretch(0);
+        sizePolicy.setHeightForWidth(label->sizePolicy().hasHeightForWidth());
+        label->setSizePolicy(sizePolicy);
+        label->setMaximumSize(QSize(1920, 1080));
+        label_2 = new QLabel(centralWidget);
+        label_2->setObjectName(QStringLiteral("label_2"));
+        label_2->setGeometry(QRect(10, 50, 91, 31));
+        sizePolicy.setHeightForWidth(label_2->sizePolicy().hasHeightForWidth());
+        label_2->setSizePolicy(sizePolicy);
+        label_2->setMaximumSize(QSize(1920, 1080));
+        label_3 = new QLabel(centralWidget);
+        label_3->setObjectName(QStringLiteral("label_3"));
+        label_3->setGeometry(QRect(10, 100, 91, 31));
+        sizePolicy.setHeightForWidth(label_3->sizePolicy().hasHeightForWidth());
+        label_3->setSizePolicy(sizePolicy);
+        label_3->setMaximumSize(QSize(1920, 1080));
+        lineEdit = new QLineEdit(centralWidget);
+        lineEdit->setObjectName(QStringLiteral("lineEdit"));
+        lineEdit->setGeometry(QRect(110, 50, 111, 31));
+        sizePolicy.setHeightForWidth(lineEdit->sizePolicy().hasHeightForWidth());
+        lineEdit->setSizePolicy(sizePolicy);
+        lineEdit->setMaximumSize(QSize(1920, 1080));
+        lineEdit_2 = new QLineEdit(centralWidget);
+        lineEdit_2->setObjectName(QStringLiteral("lineEdit_2"));
+        lineEdit_2->setGeometry(QRect(110, 100, 111, 31));
+        sizePolicy.setHeightForWidth(lineEdit_2->sizePolicy().hasHeightForWidth());
+        lineEdit_2->setSizePolicy(sizePolicy);
+        lineEdit_2->setMaximumSize(QSize(1920, 1080));
+        EnterButton = new QPushButton(centralWidget);
+        EnterButton->setObjectName(QStringLiteral("EnterButton"));
+        EnterButton->setGeometry(QRect(250, 70, 71, 31));
+        sizePolicy.setHeightForWidth(EnterButton->sizePolicy().hasHeightForWidth());
+        EnterButton->setSizePolicy(sizePolicy);
+        EnterButton->setMaximumSize(QSize(1920, 1080));
+        graphicsView = new QGraphicsView(centralWidget);
+        graphicsView->setObjectName(QStringLiteral("graphicsView"));
+        graphicsView->setGeometry(QRect(240, 130, 800, 600));
+        sizePolicy.setHeightForWidth(graphicsView->sizePolicy().hasHeightForWidth());
+        graphicsView->setSizePolicy(sizePolicy);
+        graphicsView->setMaximumSize(QSize(800, 600));
+        graphicsView->setFrameShape(QFrame::NoFrame);
+        graphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+        graphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+        graphicsView->setSizeAdjustPolicy(QAbstractScrollArea::AdjustToContents);
+        graphicsView->setTransformationAnchor(QGraphicsView::NoAnchor);
+        ResetButton = new QPushButton(centralWidget);
+        ResetButton->setObjectName(QStringLiteral("ResetButton"));
+        ResetButton->setGeometry(QRect(340, 70, 71, 31));
+        sizePolicy.setHeightForWidth(ResetButton->sizePolicy().hasHeightForWidth());
+        ResetButton->setSizePolicy(sizePolicy);
+        ResetButton->setMaximumSize(QSize(1920, 1080));
+        FurnitureList = new QListView(centralWidget);
+        FurnitureList->setObjectName(QStringLiteral("FurnitureList"));
+        FurnitureList->setGeometry(QRect(30, 190, 181, 171));
+        sizePolicy.setHeightForWidth(FurnitureList->sizePolicy().hasHeightForWidth());
+        FurnitureList->setSizePolicy(sizePolicy);
+        FurnitureList->setMaximumSize(QSize(1920, 1080));
+        label_4 = new QLabel(centralWidget);
+        label_4->setObjectName(QStringLiteral("label_4"));
+        label_4->setGeometry(QRect(50, 150, 121, 31));
+        sizePolicy.setHeightForWidth(label_4->sizePolicy().hasHeightForWidth());
+        label_4->setSizePolicy(sizePolicy);
+        label_4->setMaximumSize(QSize(1920, 1080));
+        label_4->setAlignment(Qt::AlignCenter);
+        save = new QPushButton(centralWidget);
+        save->setObjectName(QStringLiteral("save"));
+        save->setGeometry(QRect(70, 410, 100, 23));
+        open = new QPushButton(centralWidget);
+        open->setObjectName(QStringLiteral("open"));
+        open->setGeometry(QRect(70, 450, 100, 23));
+        extraction = new QPushButton(centralWidget);
+        extraction->setObjectName(QStringLiteral("extraction"));
+        extraction->setGeometry(QRect(70, 490, 100, 23));
+        exit_2 = new QPushButton(centralWidget);
+        exit_2->setObjectName(QStringLiteral("exit_2"));
+        exit_2->setGeometry(QRect(70, 530, 100, 23));
         MainWindow->setCentralWidget(centralWidget);
-        view->raise();
-        saveButton->raise();
-        LoadButton->raise();
-        currentValue->raise();
-        png_save->raise();
-        getImage->raise();
-        move->raise();
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 942, 20));
+        menuBar->setGeometry(QRect(0, 0, 1119, 20));
         MainWindow->setMenuBar(menuBar);
         mainToolBar = new QToolBar(MainWindow);
         mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
@@ -95,12 +159,16 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", nullptr));
-        saveButton->setText(QApplication::translate("MainWindow", "SaveButton", nullptr));
-        LoadButton->setText(QApplication::translate("MainWindow", "LoadButton", nullptr));
-        currentValue->setText(QApplication::translate("MainWindow", "value", nullptr));
-        png_save->setText(QApplication::translate("MainWindow", "png save", nullptr));
-        getImage->setText(QApplication::translate("MainWindow", "getImage", nullptr));
-        move->setText(QApplication::translate("MainWindow", "move", nullptr));
+        label->setText(QApplication::translate("MainWindow", "Input width and heigth of your house.", nullptr));
+        label_2->setText(QApplication::translate("MainWindow", "Width(M)", nullptr));
+        label_3->setText(QApplication::translate("MainWindow", "Height(M)", nullptr));
+        EnterButton->setText(QApplication::translate("MainWindow", "Enter", nullptr));
+        ResetButton->setText(QApplication::translate("MainWindow", "Reset", nullptr));
+        label_4->setText(QApplication::translate("MainWindow", "Furniture List", nullptr));
+        save->setText(QApplication::translate("MainWindow", "save", nullptr));
+        open->setText(QApplication::translate("MainWindow", "open", nullptr));
+        extraction->setText(QApplication::translate("MainWindow", "extraction", nullptr));
+        exit_2->setText(QApplication::translate("MainWindow", "exit", nullptr));
     } // retranslateUi
 
 };
