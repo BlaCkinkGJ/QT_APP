@@ -1,6 +1,8 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "furniture.h"
+#include "tool.cpp"
+#include "buffer.cpp"
 
 bool dir; // Not useful
 int roomColor[2000][2000]; // ----- > to make a 800 x 600
@@ -282,19 +284,38 @@ void MainWindow::mousePressEvent(QMouseEvent *mouse)
             }
         }
 
-        QPen outlinePen(Qt::green);
-        outlinePen.setWidth(5);
+        QPen outlinePen(qRgb(51, 255, 255));
+        outlinePen.setWidth(20);
+
         if(!dir)
         {
             if((Object->line().toLine().x1() + Object->line().toLine().x2() / 2) > x)
+            {
                 windowList.push_back(scene->addLine(x, y, x + 20, y, outlinePen));
-            else windowList.push_back(scene->addLine(x, y, x - 20, y, outlinePen));
+                for(int i=x; i<=x+20; i++)
+                    roomColor[i][y] = -2;
+            }
+            else
+            {
+                windowList.push_back(scene->addLine(x, y, x - 20, y, outlinePen));
+                for(int i=x; i>=x-20; i--)
+                    roomColor[i][y] = -2;
+            }
         }
         else
         {
             if((Object->line().toLine().y1() + Object->line().toLine().y2() / 2) > y)
+            {
                 windowList.push_back(scene->addLine(x, y, x, y + 20, outlinePen));
-            else windowList.push_back(scene->addLine(x, y, x, y - 20, outlinePen));
+                for(int i=y; i<=y+20; i++)
+                    roomColor[x][i] = -2;
+            }
+            else
+            {
+                windowList.push_back(scene->addLine(x, y, x, y - 20, outlinePen));
+                for(int i=y; i>=y-20; y--)
+                    roomColor[x][i] = -2;
+            }
         }
     }
     else if(wallDrawing == 4) // door
@@ -346,7 +367,7 @@ void MainWindow::mousePressEvent(QMouseEvent *mouse)
             dir = false;
         }
 
-        for(auto index : windowList)
+        for(auto index : doorList)
         {
             if(index->line().x1() == index->line().x2())
                 length = sqrt((index->line().toLine().x1() - x) * (index->line().toLine().x2() - x)
@@ -359,12 +380,12 @@ void MainWindow::mousePressEvent(QMouseEvent *mouse)
             if(length < 30)
             {
                 scene->removeItem(index);
-                windowList.erase(std::find(windowList.begin(), windowList.end(), index));
+                doorList.erase(std::find(doorList.begin(), doorList.end(), index));
                 return;
             }
         }
 
-        for(auto index : doorList)
+        for(auto index : windowList)
         {
             if(index->line().x1() == index->line().x2())
                 length = sqrt((index->line().toLine().x1() - x) * (index->line().toLine().x2() - x)
@@ -382,19 +403,38 @@ void MainWindow::mousePressEvent(QMouseEvent *mouse)
             }
         }
 
-        QPen outlinePen(Qt::black);
+        QPen outlinePen(qRgb(255, 127, 0));
         outlinePen.setWidth(20);
+
         if(!dir)
         {
             if((Object->line().toLine().x1() + Object->line().toLine().x2() / 2) > x)
-                windowList.push_back(scene->addLine(x, y, x + 20, y, outlinePen));
-            else windowList.push_back(scene->addLine(x, y, x - 20, y, outlinePen));
+            {
+                doorList.push_back(scene->addLine(x, y, x + 20, y, outlinePen));
+                for(int i=x; i<=x+20; i++)
+                    roomColor[i][y] = -3;
+            }
+            else
+            {
+                doorList.push_back(scene->addLine(x, y, x - 20, y, outlinePen));
+                for(int i=x; i>=x-20; i--)
+                    roomColor[i][y] = -3;
+            }
         }
         else
         {
             if((Object->line().toLine().y1() + Object->line().toLine().y2() / 2) > y)
-                windowList.push_back(scene->addLine(x, y, x, y + 20, outlinePen));
-            else windowList.push_back(scene->addLine(x, y, x, y - 20, outlinePen));
+            {
+                doorList.push_back(scene->addLine(x, y, x, y + 20, outlinePen));
+                for(int i=y; i<=y+20; i++)
+                    roomColor[x][i] = -3;
+            }
+            else
+            {
+                doorList.push_back(scene->addLine(x, y, x, y - 20, outlinePen));
+                for(int i=y; i>=y-20; y--)
+                    roomColor[x][i] = -3;
+            }
         }
     }
 }
@@ -443,9 +483,10 @@ void MainWindow::mouseDoubleClickEvent(QMouseEvent *event)
 
 void MainWindow::bfs()
 {
+    roomList.clear();
+
     QPixmap qPix = QPixmap::grabWidget(ui->graphicsView, 0, 0, 1001, 1001);
     QImage image(qPix.toImage());
-
 
     for(int i = 0; i <= 1000; i++)
         for(int j = 0; j <= 1000; j++)
@@ -454,8 +495,15 @@ void MainWindow::bfs()
             image.setPixelColor(i, j,  qRgb(255, 255, 255));
         }
 
-    QRgb val[3] = {qRgb(155, 0 ,0), qRgb(0, 155, 0), qRgb(0, 0, 155)};
+    QRgb val[11] = {qRgb(254, 254, 254), qRgb(255, 153, 128), qRgb(251, 231, 178),
+                   qRgb(241, 231, 136), qRgb(175, 227, 19), qRgb(252, 128, 165),
+                   qRgb(157, 224, 47),  qRgb(147, 223, 184), qRgb(0, 204, 153),
+                   qRgb(147, 204, 143), qRgb(118, 110, 200)};
+
     int count = 0;
+    roomInformation addRoom;
+    addRoom.index = 0;
+    addRoom.name = QString::number(addRoom.index);
 
     int dx[4] = {1, -1, 0, 0}, dy[4] = {0, 0, 1, -1};
     for(int i = 0; i <= houseWidth; i++)
@@ -471,7 +519,16 @@ void MainWindow::bfs()
                 {
                     if(temp.empty())
                     {
-                        count++;
+                        roomList.push_back(addRoom);
+                        if(addRoom.index)
+                        {
+                            ui->listWidget->addItem(addRoom.name);
+                            // QList ql = ui->listWidget_2->selectedItems();
+
+                        }
+                        addRoom.index = ++count;
+                        addRoom.name = QString::number(addRoom.index);
+                        addRoom.hasDoor = false;
                         break;
                     }
                     int tx = temp.front().first;
@@ -485,6 +542,10 @@ void MainWindow::bfs()
                         if(x < 0 || y < 0 || x > houseWidth || y > houseHeight) continue;
                         QColor color2(image.pixelColor(x, y));
                         // if(roomColor[x][y]) continue;
+                        if(color2 == qRgb(51, 255, 255) || color2 == qRgb(255, 127, 0))
+                        {
+                            addRoom.hasDoor = true;
+                        }
                         if(color2.blue() != 255 || color2.red() != 255 || color2.green() != 255) continue;
                         roomColor[x][y] = count + 1;
                         image.setPixelColor(x, y,  val[count]);
@@ -496,11 +557,49 @@ void MainWindow::bfs()
 
     QPixmap pixmap = QPixmap::fromImage(image);
     scene->addPixmap(pixmap);
+
+    for(auto index : experiorWall)
+    {
+        int tx1 = index->line().toLine().x1() < index->line().toLine().x2() ?
+                    index->line().toLine().x1() : index->line().toLine().x2();
+        int tx2 = tx1 == index->line().toLine().x2() ?
+                    index->line().toLine().x1() : index->line().toLine().x2();
+        int ty1 = index->line().toLine().y1() < index->line().toLine().y2() ?
+                    index->line().toLine().y1() : index->line().toLine().y2();
+        int ty2 = ty1 == index->line().toLine().y2() ?
+                    index->line().toLine().y1() : index->line().toLine().y2();
+        for(int i = tx1; i <= tx2; i++)
+            for(int j = ty1; j <= ty2; j++)
+            {
+                QColor color2(image.pixelColor(i, j));
+                if(color2 == qRgb(51, 255, 255) || color2 == qRgb(255, 127, 0))
+                {
+                    goto ABC;
+                }
+            }
+        if(index == experiorWall[3])
+        {
+            ui->alertLabel->setText("Any Room must have a door or window.");
+            break;
+        }
+    }
+
+    ABC:
+
+    for(int i = 1; i < roomList.size(); i++)
+    {
+        if(!roomList[i].hasDoor)
+        {
+            ui->alertLabel->setText("Any Room must have a door or window.");
+            break;
+        }
+        if(i == roomList.size() - 1)
+            ui->alertLabel->setText("");
+    }
 }
 
 void MainWindow::on_exit_clicked()
 { // close the application
-    QApplication::quit();
 }
 
 void MainWindow::on_save_clicked()

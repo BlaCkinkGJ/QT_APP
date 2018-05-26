@@ -25,6 +25,7 @@
 #include <QWidget>
 #include <queue>
 #include <cmath>
+#include <QList>
 
 #include "tool.h"
 
@@ -68,6 +69,13 @@ private slots:
     void on_extraction_clicked();
 
 private:
+    struct roomInformation
+    {
+        int index;
+        QString name;
+        bool hasDoor = false;
+    };
+
     bool startDrawing = false;
     int wallDrawing = 0;
     int wallx1, wally1, wallx2, wally2;
@@ -75,21 +83,24 @@ private:
     QMessageBox qmb;
     Ui::MainWindow *ui;
     tool toolBar;
+    std::vector<roomInformation> roomList;
 /*
     SchScene *scene;
 */
+
+
 
     QGraphicsScene *scene;
     std::vector<QGraphicsLineItem *> experiorWall;
     std::vector<QGraphicsLineItem *> interiorWall;
     std::vector<QGraphicsLineItem *> windowList;
     std::vector<QGraphicsLineItem *> doorList;
-    std::vector<std::vector<QGraphicsLineItem *> > room;
     void mousePressEvent(QMouseEvent *mouse);
     void mouseMoveEvent(QMouseEvent *mouseEvent);
     void mouseDoubleClickEvent(QMouseEvent *event);
     void keyPressEvent(QKeyEvent* event);
     void bfs();
+
 };
 
 #endif // MAINWINDOW_H

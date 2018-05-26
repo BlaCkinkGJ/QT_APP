@@ -2,6 +2,7 @@
 
 int tool::newFile(){
     // clear viewport and then set current class
+    return 0;
 }
 
 
