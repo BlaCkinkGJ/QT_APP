@@ -71,7 +71,7 @@ private:
     std::vector<QGraphicsLineItem *> experiorWall;
     std::vector<QGraphicsLineItem *> interiorWall;
     std::vector<QGraphicsLineItem *> windowList;
-    std::vector<QGraphicsRectItem *> doorList;
+    std::vector<QGraphicsLineItem *> doorList;
     std::vector<std::vector<QGraphicsLineItem *> > room;
     void mousePressEvent(QMouseEvent *mouse);
     void mouseMoveEvent(QMouseEvent *mouseEvent);

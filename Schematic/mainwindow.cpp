@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "furniture.h"
 
 bool dir; // Not useful
 int roomColor[2000][2000];
@@ -13,73 +14,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     ui->graphicsView->setScene(scene);
 }
 
-
 MainWindow::~MainWindow()
 {
     delete ui;
 }
-/*
-#include "tool.h"
-#include "sample.h"
-#include "furniture.h"
 
-#include <QDebug>
-
-MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent),
-    ui(new Ui::MainWindow)
-{
-    ui->setupUi(this);
-
-    this->scene = new SchScene();
-    ui->view->setScene(scene);
-    scene->item = nullptr;
-}
-void MainWindow::on_saveButton_clicked()
-{
-    sample sam(2);
-   tool toolbar;
-    toolbar.saveFile(sam);
-    ui->currentValue->setText(QString::number(sam.getValue()));
-}
-
-void MainWindow::on_LoadButton_clicked()
-{
-    sample sam(2);
-    tool toolbar;
-    toolbar.openFile(sam);
-
-    ui->currentValue->setText(QString::number(sam.getValue()));
-}
-
-void MainWindow::on_png_save_clicked()
-{
-    this->scene->clear();
-    this->scene->addRect(0, 0, 100, 200, QPen(Qt::black), QBrush(Qt::green));
-    //tool toolbar;
-    //toolbar.imageExtraction(ui->view);
-}
-
-void MainWindow::on_getImage_clicked()
-{
-    this->scene->clear();
-    Furniture refri("refri", "/home/kijunking/asd.png");
-    QPixmap *map = refri.getImage();
-    this->scene->item = new QGraphicsPixmapItem(*map);
-    this->scene->item->setPos(0.0, 100.0);
-    //qDebug() << map->rect().intersects(QRect(0, 0, 100, 100))<< endl; // how to properly use
-    this->scene->addItem(this->scene->item);
-}
-
-void MainWindow::on_move_clicked()
-{
-    if(this->scene->item != nullptr){
-        static quint64 value = 10;
-        scene->item->setPos(0, value);
-        value = (value + 10) % 100;
-    }
-=======
-*/
 void MainWindow::keyPressEvent(QKeyEvent* event)
 {
     if(!startDrawing) return;
@@ -110,6 +49,11 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
             return;
         }
         wallDrawing = 4;
+    }
+    else if (event->key() == Qt::Key_4)
+    {
+        bfs();
+        wallDrawing = 0;
     }
 }
 
@@ -247,6 +191,7 @@ void MainWindow::mousePressEvent(QMouseEvent *mouse)
         interiorWall.push_back(scene->addLine(wallx1, wally1, wallx2, wally2, outlinePen));
 
         scene->removeItem(temp);
+        delete temp;
 
         for(int i=wallx1; i<=wallx2; i++)
             for(int j=wally1; j<=wally2; j++)
@@ -315,6 +260,24 @@ void MainWindow::mousePressEvent(QMouseEvent *mouse)
             {
                 scene->removeItem(index);
                 windowList.erase(std::find(windowList.begin(), windowList.end(), index));
+                return;
+            }
+        }
+
+        for(auto index : doorList)
+        {
+            if(index->line().x1() == index->line().x2())
+                length = sqrt((index->line().toLine().x1() - x) * (index->line().toLine().x2() - x)
+                        + ((index->line().toLine().y1() + index->line().toLine().y2()) / 2 - y)
+                        * ((index->line().toLine().y1() + index->line().toLine().y2()) / 2 - y));
+            else length = sqrt((index->line().toLine().y1() - y) * (index->line().toLine().y2() - y)
+                               + ((index->line().toLine().x1() + index->line().toLine().x2()) / 2 - x)
+                               * ((index->line().toLine().x1() + index->line().toLine().x2()) / 2 - x));
+
+            if(length < 30)
+            {
+                qmb.setText("Too Close");
+                qmb.exec();
                 return;
             }
         }
@@ -401,6 +364,24 @@ void MainWindow::mousePressEvent(QMouseEvent *mouse)
             }
         }
 
+        for(auto index : doorList)
+        {
+            if(index->line().x1() == index->line().x2())
+                length = sqrt((index->line().toLine().x1() - x) * (index->line().toLine().x2() - x)
+                        + ((index->line().toLine().y1() + index->line().toLine().y2()) / 2 - y)
+                        * ((index->line().toLine().y1() + index->line().toLine().y2()) / 2 - y));
+            else length = sqrt((index->line().toLine().y1() - y) * (index->line().toLine().y2() - y)
+                               + ((index->line().toLine().x1() + index->line().toLine().x2()) / 2 - x)
+                               * ((index->line().toLine().x1() + index->line().toLine().x2()) / 2 - x));
+
+            if(length < 30)
+            {
+                qmb.setText("Too Close");
+                qmb.exec();
+                return;
+            }
+        }
+
         QPen outlinePen(Qt::black);
         outlinePen.setWidth(20);
         if(!dir)
@@ -432,7 +413,7 @@ void MainWindow::mouseMoveEvent(QMouseEvent *mouseEvent)
 void MainWindow::mouseDoubleClickEvent(QMouseEvent *event)
 {
     if(!(wallDrawing == 1 || wallDrawing == 2)) return;
-    bfs();
+
     double length;
 
     QPoint origin = ui->graphicsView->mapFromGlobal(QCursor::pos());
@@ -462,15 +443,22 @@ void MainWindow::mouseDoubleClickEvent(QMouseEvent *event)
 
 void MainWindow::bfs()
 {
-    QPixmap qPix = QPixmap::grabWidget(ui->graphicsView);
+    QPixmap qPix = QPixmap::grabWidget(ui->graphicsView, 0, 0, 1001, 1001);
     QImage image(qPix.toImage());
 
-    QRgb val[3] = {qRgb(255, 0 ,0), qRgb(0, 255, 0), qRgb(0, 0, 255)};
+
+    for(int i = 0; i <= 1000; i++)
+        for(int j = 0; j <= 1000; j++)
+        {
+            if(i <= houseWidth && j <= houseHeight) continue;
+            image.setPixelColor(i, j,  qRgb(255, 255, 255));
+        }
+
+    QRgb val[3] = {qRgb(155, 0 ,0), qRgb(0, 155, 0), qRgb(0, 0, 155)};
     int count = 0;
 
     int dx[4] = {1, -1, 0, 0}, dy[4] = {0, 0, 1, -1};
     for(int i = 0; i <= houseWidth; i++)
-    {
         for(int j = 0; j <= houseHeight; j++)
         {
             QColor color(image.pixelColor(i, j));
@@ -498,15 +486,13 @@ void MainWindow::bfs()
                         QColor color2(image.pixelColor(x, y));
                         // if(roomColor[x][y]) continue;
                         if(color2.blue() != 255 || color2.red() != 255 || color2.green() != 255) continue;
-                        // roomColor[x][y] = count + 1;
+                        roomColor[x][y] = count + 1;
                         image.setPixelColor(x, y,  val[count]);
                         temp.push(std::make_pair(x, y));
                     }
                 }
             }
         }
-    }
-
 
     QPixmap pixmap = QPixmap::fromImage(image);
     scene->addPixmap(pixmap);
