@@ -5,7 +5,7 @@
 #include "buffer.cpp"
 
 bool dir; // Not useful
-int roomColor[2000][2000]; // ----- > to make a 800 x 600
+int roomColor[1500][1500]; // ----- > to make a 800 x 600
 int state = 0;
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
@@ -84,8 +84,8 @@ void MainWindow::on_EnterButton_clicked()
     if(startDrawing) return;
     else startDrawing = true;
 
-    QPoint origin = ui->graphicsView->mapFromGlobal(QCursor::pos());
-    QPointF relativeOrigin = ui->graphicsView->mapToScene(origin);
+    // QPoint origin = ui->graphicsView->mapFromGlobal(QCursor::pos());
+    // QPointF relativeOrigin = ui->graphicsView->mapToScene(origin);
 
     double width = ui->lineEdit->text().toDouble();
     double height = ui->lineEdit_2->text().toDouble();
@@ -104,20 +104,20 @@ void MainWindow::on_EnterButton_clicked()
 
 void MainWindow::on_ResetButton_clicked()
 {
-    for(int i=0; i<=2000; i++)
-        for(int j=0; j<=2000; j++)
+    for(int i=0; i<=1000; i++)
+        for(int j=0; j<=1000; j++)
             roomColor[i][j] = 0;
 
     QPixmap qPix = QPixmap::grabWidget(ui->graphicsView, 0, 0, 1001, 1001);
     QImage image(qPix.toImage());
 
-    QRgb val = qRgb(255, 255 ,255);
+    QRgb val = qRgb(254, 254 ,254);
 
     for(int i = 0; i <= 1000; i++)
         for(int j = 0; j <= 1000; j++)
             image.setPixelColor(i, j,  val);
 
-    QPixmap pixmap = QPixmap::fromImage(image);
+    QPixmap pixmap; pixmap.fromImage(image);
     scene->addPixmap(pixmap);
 
     /*
@@ -143,15 +143,25 @@ void MainWindow::on_ResetButton_clicked()
     windowList.clear();
     doorList.clear();
     this->ui->listWidget->clear();
+    this->ui->FurnitureList->clear();
+    this->furniture.clear();
     scene->clear();
     startDrawing = false;
 
     ui->listWidget->clear();
     ui->listWidget_2->clear();
+    this->furniture.insert("refrigerator", Furniture("refrigerator",
+                  "refri.PNG"));
+    this->furniture.insert("laundry", Furniture("laundry",
+                  "laun.PNG"));
+    for(auto i : this->furniture)
+        this->ui->FurnitureList->addItem(i.getName());
 }
 
 void MainWindow::mousePressEvent(QMouseEvent *mouse)
 {
+    static int test = 0;
+    qDebug() << test++ << endl;
     if(!startDrawing || !wallDrawing) return;
 
     QPoint origin = ui->graphicsView->mapFromGlobal(QCursor::pos());
@@ -495,7 +505,7 @@ void MainWindow::mousePressEvent(QMouseEvent *mouse)
 
 void MainWindow::mouseDoubleClickEvent(QMouseEvent *event)
 {
-    if(!(wallDrawing == 1 || wallDrawing == 2))
+    if((wallDrawing == 1 || wallDrawing == 2))
     {
         return;
     }
@@ -636,7 +646,7 @@ void MainWindow::bfs()
 
     ABC:
 
-    for(int i = 1; i < roomList.size(); i++)
+    for(size_t i = 1; i < roomList.size(); i++)
     {
         if(!roomList[i].hasDoor)
         {
@@ -794,12 +804,18 @@ void MainWindow::on_open_clicked()
             QMessageBox::information(this, tr("Unable to open file"),
                                      file.errorString());
             return;
+            this->furniture.insert("refrigerator", Furniture("refrigerator",
+                          "refri.PNG"));
+            this->furniture.insert("laundry", Furniture("laundry",
+                          "laun.PNG"));
+            for(auto i : this->furniture)
+                this->ui->FurnitureList->addItem(i.getName());
         }
         QTextStream in(&file);
         QString temp;
+        this->on_ResetButton_clicked();
+        this->furniture.clear();
         this->ui->FurnitureList->clear();
-        this->ui->listWidget->clear();
-        this->scene->clear();
         do{
             QString tag;
             in >> tag;
@@ -866,7 +882,6 @@ void MainWindow::on_extraction_clicked()
         return ; // invalid state
     else {
         QPixmap pix = QPixmap::grabWidget(this->ui->graphicsView);
-        if(pix.isNull()) return ;
         pix.save(fileName);
     return; // success}
     }

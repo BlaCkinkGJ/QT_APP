@@ -18,13 +18,11 @@ int Furniture::setName(const QString &name){
 
 int Furniture::setPosition(const QPointF &position){
     this->position = position;
-    if(this->position.isNull()) return -1;
     return 0;
 }
 
 int Furniture::setImage(const QString &imageFileName){
     QPixmap *pixmap = new QPixmap(imageFileName);
-    if(pixmap->isNull()) return -1;
     this->image = pixmap;
     return 0;
 }
@@ -61,6 +59,6 @@ QString Furniture::getImageDir(){
 }
 
 Furniture::~Furniture(){
-    if(!this->image->isNull())
+    if(this->image->isDetached())
         delete this->image;
 }
